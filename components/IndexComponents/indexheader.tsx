@@ -60,6 +60,6 @@ const style = StyleSheet.create({
 
     header: {
       fontSize: 40,
-      width: 340
+      width: "80%"
     },
 });

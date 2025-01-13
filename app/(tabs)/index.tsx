@@ -18,9 +18,7 @@ export default function Index() {
           <IndexHeader/>
         </View>
         <View style={style.components}>
-          <IndexNotification
-            navigation = {navigation}
-          />
+          <IndexNotification />
         </View>
         <View style={style.components}>
           <IndexTreatmentPlan />

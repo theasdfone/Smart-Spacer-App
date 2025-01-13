@@ -4,24 +4,30 @@ import { Resource } from './objects/resource';
 import { placeholder } from '@/placeholder/placeholder';
 import { Link } from 'expo-router';
 
-export default function ResourceContainer() {
-    const [resources, setResources] = useState<Resource[]>(placeholder.resources);
+type Props = {
+    resources: Resource[]
+}
 
+export default function ResourceContainer({resources}: Props) {
  return (
-      <View>
+      <View style={style.container}>
         {
             resources.map((resource) => {
                 return(
-                    <View>
+                    <View key={resource.ResourceId} style={style.resourceContainer}>
                         <Link
                             href={resource.Link}
                         >
-                            <Image 
-                                style={style.resourceImg}
-                                source={require('../../assets/images/resource-pic1.png')}
-                            />
-                            <Text>{resource.Title}</Text>
-                            <Text>{resource.Description}</Text>
+                            <View>
+                                <Image 
+                                    style={style.resourceImg}
+                                    source={require('../../assets/images/resource-pic1.png')}
+                                />
+                                <View style={style.title}>
+                                    <Text>{resource.Title}</Text>
+                                    <Text>{resource.Description}</Text>
+                                </View>
+                            </View>
                         </Link>
                     </View>
                 )
@@ -32,8 +38,25 @@ export default function ResourceContainer() {
 }
 
 const style = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+
+    resourceContainer: {
+        width: 175,
+        margin: 10,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
     resourceImg: {
-        height: 50,
-        width: 50
+        height: 175,
+        width: 175,
+        borderRadius: 5
+    },
+
+    title: {
+        paddingTop: 10
     }
 });

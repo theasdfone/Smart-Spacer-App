@@ -1,9 +1,13 @@
+import { Resource } from "@/components/ResourceComponents/objects/resource";
 import ResourceContainer from "@/components/ResourceComponents/resourcecontainer";
 import ResourceHeader from "@/components/ResourceComponents/resourceheader";
-import { Link } from "expo-router";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { placeholder } from "@/placeholder/placeholder";
+import { useState } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
 
 export default function resourceScreen() {
+  const [resources, setResources] = useState<Resource[]>(placeholder.resources);
+
 
  return (
     <View style={style.main}>
@@ -11,10 +15,14 @@ export default function resourceScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={style.components}>
-          <ResourceHeader/>
+          <ResourceHeader
+            resultSize={resources.length}
+          />
         </View>
         <View style={style.components}>
-          <ResourceContainer/>
+          <ResourceContainer
+            resources={resources}
+          />
         </View>
       </ScrollView>
     </View>
@@ -29,6 +37,6 @@ const style = StyleSheet.create({
     },
 
     components: {
-      marginTop: 50
+      marginTop: 20
     },
 });
