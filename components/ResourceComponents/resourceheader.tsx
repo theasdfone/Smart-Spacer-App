@@ -39,7 +39,10 @@ export default function ResourceHeader({resultSize}: Props) {
           </Pressable>
         </View>
         <View style={style.searchbar}>
-          <Searchbar/>
+          <Searchbar
+            searchPhrase={search}
+            setSearchPhrase={setSearch}
+          />
         </View>
         <View style={style.results}>
           <Text>Results {resultSize}</Text>

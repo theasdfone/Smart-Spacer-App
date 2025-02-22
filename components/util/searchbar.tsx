@@ -3,7 +3,7 @@ import { Feather } from "@expo/vector-icons";
 
 type Props = {
   searchPhrase: string;
-  setSearchPhrase?: string;
+  setSearchPhrase:  React.Dispatch<React.SetStateAction<any>>;
 };
 
 export default function Searchbar({searchPhrase, setSearchPhrase} : Props) {
@@ -19,6 +19,7 @@ export default function Searchbar({searchPhrase, setSearchPhrase} : Props) {
             style={styles.input}
             placeholder="Search"
             value={searchPhrase}
+            onChangeText={setSearchPhrase}
           />
       </View>
     );
