@@ -1,0 +1,26 @@
+import GameHeader from "@/components/GameComponent/gameheader/gameheader";
+import { Link } from "expo-router";
+import { Text, View, StyleSheet } from "react-native";
+
+export default function journalScreen() {
+
+ return (
+    <View style={style.main}>
+      <GameHeader />
+    </View>
+  );
+}
+
+const style = StyleSheet.create({
+    main: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    button: {
+      fontSize: 20,
+      textDecorationLine: "underline",
+      color: "#fff"
+    }
+});
