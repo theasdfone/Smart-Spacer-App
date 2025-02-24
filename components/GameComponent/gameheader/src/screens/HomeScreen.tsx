@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { View, Pressable, StyleSheet, ImageBackground, Image, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window'); // Get screen dimensions
 
-const GameHeader = ({ navigation }) => {
-     const [activeButton, setActiveButton] = useState(null);
-
+const HomeScreen = ({ navigation }) => {
+    const [activeButton, setActiveButton] = useState(null);
   return (
-    <ImageBackground source={require('./src/assets/HomeReference.png')} style={styles.container}>
-      {/* Centered Bunny */}
-      <View style={styles.characterContainer}>
-        <Image
-          source={require('./src/assets/bunny_plain_og.png')}
-          style={styles.characterImage}
-          resizeMode="contain"
-        />
-      </View>
+    <ImageBackground source={require('../assets/HomeReference.png')} style={styles.container}>
+       {/* Character in the center */}
+       <View style={styles.characterContainer}>
+         <Image
+           source={require('../assets/bunny_plain_og.png')}
+           style={styles.characterImage}
+           resizeMode="contain" // Ensures the image fits within the container
+         />
+       </View>
 
       {/* Buttons at the bottom */}
       <View style={styles.buttonContainer}>
@@ -28,8 +27,8 @@ const GameHeader = ({ navigation }) => {
           <Image
             source={
               activeButton === 'closet'
-                ? require('./src/assets/buttons/ClothesPressed.png')
-                : require('./src/assets/buttons/Clothes.png')
+                ? require('../assets/buttons/ClothesPressed.png')
+                : require('../assets/buttons/Clothes.png')
             }
             style={styles.buttonImage}
             resizeMode="contain"
@@ -46,14 +45,14 @@ const GameHeader = ({ navigation }) => {
           <Image
             source={
               activeButton === 'journal'
-                ? require('./src/assets/buttons/JournalPressed.png')
-                : require('./src/assets/buttons/Journal.png')
+                ? require('../assets/buttons/JournalPressed.png')
+                : require('../assets/buttons/Journal.png')
             }
             style={styles.buttonImage}
             resizeMode="contain"
           />
         </Pressable>
-        {/* Food Button */}
+{/* Food Button */}
         <Pressable
           onPressIn={() => {
             setActiveButton('food');
@@ -63,8 +62,8 @@ const GameHeader = ({ navigation }) => {
           <Image
             source={
               activeButton === 'food'
-                ? require('./src/assets/buttons/FoodPressed.png')
-                : require('./src/assets/buttons/Food.png')
+                ? require('../assets/buttons/FoodPressed.png')
+                : require('../assets/buttons/Food.png')
             }
             style={styles.buttonImage}
             resizeMode="contain"
@@ -110,4 +109,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GameHeader;
+
+
+export default HomeScreen;
