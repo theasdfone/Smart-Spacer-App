@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 
-const GameHeader = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
   return (
-    <ImageBackground source={require('./src/assets/HomeReference.png')} style={styles.container}>
-      {/* Centered Bunny */}
-      <View style={styles.characterContainer}>
-        <Image
-          source={require('./src/assets/bunny_plain_og.png')}
-          style={styles.characterImage}
-          resizeMode="contain"
-        />
-      </View>
+    <ImageBackground source={require('../assets/HomeReference.png')} style={styles.container}>
+       {/* Character in the center */}
+       <View style={styles.characterContainer}>
+         <Image
+           source={require('../assets/bunny_plain_og.png')}
+           style={styles.characterImage}
+           resizeMode="contain" // Ensures the image fits within the container
+         />
+       </View>
 
       {/* Buttons at the bottom */}
       <View style={styles.buttonContainer}>
@@ -40,9 +40,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  characterImage: {
-    width: 200,
-    height: 200,
+  character: {
+    fontSize: 100,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -62,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GameHeader;
+export default HomeScreen;
