@@ -1,7 +1,10 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Pressable, StyleSheet, ImageBackground, Image, Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window'); // Get screen dimensions
 
 const GameHeader = ({ navigation }) => {
+     const [activeButton, setActiveButton] = useState(null);
+
   return (
     <ImageBackground source={require('./src/assets/HomeReference.png')} style={styles.container}>
       {/* Centered Bunny */}
@@ -15,19 +18,63 @@ const GameHeader = ({ navigation }) => {
 
       {/* Buttons at the bottom */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Closet')}>
-          <Text style={styles.buttonText}>Closet</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Journal')}>
-          <Text style={styles.buttonText}>Journal</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Food')}>
-          <Text style={styles.buttonText}>Food</Text>
-        </TouchableOpacity>
+        {/* Closet Button */}
+        <Pressable
+          onPressIn={() => {
+            setActiveButton('closet');
+            navigation.navigate('Closet');
+          }}
+        >
+          <Image
+            source={
+              activeButton === 'closet'
+                ? require('./src/assets/buttons/ClothesPressed.png')
+                : require('./src/assets/buttons/Clothes.png')
+            }
+            style={styles.buttonImage}
+            resizeMode="contain"
+          />
+        </Pressable>
+
+        {/* Journal Button */}
+        <Pressable
+          onPressIn={() => {
+            setActiveButton('journal');
+            navigation.navigate('Journal');
+          }}
+        >
+          <Image
+            source={
+              activeButton === 'journal'
+                ? require('./src/assets/buttons/JournalPressed.png')
+                : require('./src/assets/buttons/Journal.png')
+            }
+            style={styles.buttonImage}
+            resizeMode="contain"
+          />
+        </Pressable>
+        {/* Food Button */}
+        <Pressable
+          onPressIn={() => {
+            setActiveButton('food');
+            navigation.navigate('Food');
+          }}
+        >
+          <Image
+            source={
+              activeButton === 'food'
+                ? require('./src/assets/buttons/FoodPressed.png')
+                : require('./src/assets/buttons/Food.png')
+            }
+            style={styles.buttonImage}
+            resizeMode="contain"
+          />
+        </Pressable>
       </View>
     </ImageBackground>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -37,28 +84,29 @@ const styles = StyleSheet.create({
   },
   characterContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
+    marginBottom: 10,
   },
   characterImage: {
-    width: 200,
-    height: 200,
+    width: 275,
+    height: 425,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
     padding: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'rgba(255, 255, 255, 0)',
   },
   button: {
     padding: 15,
     backgroundColor: '#6200ee',
     borderRadius: 10,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
+  buttonImage: {
+      width: 80, // Adjust the width of the buttons
+      height: 80, // Adjust the height of the buttons
   },
 });
 
