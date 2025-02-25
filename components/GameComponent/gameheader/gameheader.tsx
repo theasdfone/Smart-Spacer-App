@@ -17,11 +17,11 @@ export default function GameHeader(){
   return (
     <View style={styles.container}>
       {/* Background Image */}
-      <Image source={require("./src/assets/images/background.png")} style={styles.background} />
+      <Image source={require("../src/assets/images/background.png")} style={styles.background} />
 
       {/* Level Bar */}
       <View style={styles.levelBar}>
-        <Image source={require("./src/assets/images/level_bar.png")} style={styles.levelBarImage} />
+        <Image source={require("../src/assets/images/level_bar.png")} style={styles.levelBarImage} />
         <Text style={styles.levelText}>Lvl 1</Text>
       </View>
 
@@ -48,13 +48,13 @@ export default function GameHeader(){
       {/* Bottom Buttons (Dress, Actions, Food) */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity>
-          <Image source={require("./src/assets/images/clothes_button.png")} style={styles.button} />
+          <Image source={require("../src/assets/images/clothes_button.png")} style={styles.button} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={require("./src/assets/images/actions_button.png")} style={styles.button} />
+          <Image source={require("../src/assets/images/journal_button.png")} style={styles.button} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={require("./src/assets/images/food_button.png")} style={styles.button} />
+          <Image source={require("../src/assets/images/food_button.png")} style={styles.button} />
         </TouchableOpacity>
       </View>
 
