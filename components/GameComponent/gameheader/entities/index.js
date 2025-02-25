@@ -1,5 +1,6 @@
-import Matter from "matter-js"
+/*import Matter from "matter-js"
 import Bird from "../components/Bird";
+import Bunny from "../components/Bunny"
 import Floor from "../components/Floor";
 import Obstacle from "../components/Obstacle";
 
@@ -32,4 +33,16 @@ export default restart => {
 
         Floor: Floor(world, 'green', { x: windowWidth / 2, y: windowHeight }, { height: 50, width: windowWidth })
     }
+}
+*/
+export default function entities(sprite) {
+  return {
+    bunny: {
+      position: [50, 300],
+      size: [40, 40],
+      renderer: <Image source={sprite} style={{ width: 40, height: 40 }} />,
+      // Add other properties like physics, etc.
+    },
+    // Other entities like obstacles, etc.
+  };
 }

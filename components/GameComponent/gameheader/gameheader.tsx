@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, Image, TouchableOpacity, View } from 'react-native';
 import { GameEngine } from "react-native-game-engine";
 import entities from './entities';
 import Physics from './physics';
@@ -9,7 +9,7 @@ export default function GameHeader(){
     const [running, setRunning] = useState(false);
     const [gameEngine, setGameEngine] = useState(null);
     const [currentPoints, setCurrentPoints] = useState(0);
-
+    const [currentSprite, setCurrentSprite] = useState(require('./src/assets/images/bunny.png'));
     useEffect(() => {
       setRunning(false)
     }, []);
@@ -17,11 +17,11 @@ export default function GameHeader(){
   return (
     <View style={styles.container}>
       {/* Background Image */}
-      <Image source={require("../src/assets/images/background.png")} style={styles.background} />
+      <Image source={require('./src/assets/images/background.png')} style={styles.background} />
 
       {/* Level Bar */}
       <View style={styles.levelBar}>
-        <Image source={require("../src/assets/images/level_bar.png")} style={styles.levelBarImage} />
+        <Image source={require('./src/assets/images/level_bar.png')} style={styles.levelBarImage} />
         <Text style={styles.levelText}>Lvl 1</Text>
       </View>
 
@@ -29,7 +29,7 @@ export default function GameHeader(){
       <GameEngine
         ref={(ref) => setGameEngine(ref)}
         systems={[Physics]}
-        entities={entities()}
+        entities={entities(currentSprite)}
         running={running}
         onEvent={(e) => {
           switch (e.type) {
@@ -48,13 +48,13 @@ export default function GameHeader(){
       {/* Bottom Buttons (Dress, Actions, Food) */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity>
-          <Image source={require("../src/assets/images/clothes_button.png")} style={styles.button} />
+          <Image source={require('./src/assets/images/clothes_button.png')} style={styles.button} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={require("../src/assets/images/journal_button.png")} style={styles.button} />
+          <Image source={require('./src/assets/images/journal_button.png')} style={styles.button} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={require("../src/assets/images/food_button.png")} style={styles.button} />
+          <Image source={require('./src/assets/images/food_button.png')} style={styles.button} />
         </TouchableOpacity>
       </View>
 
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    alignItems:"center",
   },
   background: {
     position: "absolute",
@@ -91,7 +92,6 @@ const styles = StyleSheet.create({
     top: 10,
     left: 10,
     flexDirection: "row",
-    alignItems: "center",
   },
   levelBarImage: {
     width: 100,
