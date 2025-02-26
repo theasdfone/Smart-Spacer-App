@@ -33,7 +33,7 @@ export default function IndexTreatment() {
                     />
                     <View style={style.inhalerDescriptions}>
                       <Text style={style.inhalerText}>{inhaler.Title}</Text>
-                      <ProgressBar progress={inhaler.AmountLeft} width={220} height={4} color='gray' borderWidth={2} />
+                      <ProgressBar progress={inhaler.AmountLeft} width={220} height={4} color={inhaler.InhalerType == 1 ? 'orange' : 'blue'} borderWidth={2} />
                     </View>
                   </View>
                 )
@@ -43,12 +43,8 @@ export default function IndexTreatment() {
           <View style={style.editContainer}>
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
-              style={style.editButton}
             >
-              <Image 
-                style={style.editIcon}
-                source={require('../../assets/images/edit.png')}
-              />
+              <Text style={style.editButton}>See Full Report</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -139,12 +135,7 @@ const style = StyleSheet.create({
   },
 
   editButton: {
-    backgroundColor: "darkgrey",
-    height: 35,
-    width: 35,
-    borderRadius: 40,
-    alignItems: "center",
-    justifyContent: "center"
+    textDecorationLine: "underline"
   },
 
   editIcon: {

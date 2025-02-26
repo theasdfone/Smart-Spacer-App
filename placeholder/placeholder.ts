@@ -117,16 +117,19 @@ export const placeholder = {
           InhalerId: 1,
           Title: "50 mcg/puff Salbutermol (Orange) - Twice a day",
           AmountLeft: 0.5,
+          InhalerType: 1
         },
         {
           InhalerId: 2,
           Title: "100 mcg/puff Ventolin (Blue) - As needed",
           AmountLeft: 0.8,
+          InhalerType: 2
         },
         {
           InhalerId: 3,
           Title: "This is a test puffer",
           AmountLeft: 0.2,
+          InhalerType: 1
         }
     ],
 
@@ -179,5 +182,12 @@ export const placeholder = {
         Description: "More information about peep",
         Link: "https://datatracker.ietf.org/doc/html/rfc7168"
       }
-    ]
+    ],
+
+    spacer: {
+        SpacerId: 1,
+        SerialNum: "1234567890",
+        Percentage: 0.6,
+        Paired: true,
+    }
 }

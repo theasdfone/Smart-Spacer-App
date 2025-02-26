@@ -1,12 +1,10 @@
-import GameHeader from "@/components/GameComponent/gameheader/gameheader";
-import { Link } from "expo-router";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 export default function journalScreen() {
 
  return (
     <View style={style.main}>
-      <GameHeader />
+      
     </View>
   );
 }

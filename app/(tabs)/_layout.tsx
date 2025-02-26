@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

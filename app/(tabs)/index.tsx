@@ -4,11 +4,10 @@ import IndexHeader from '@/components/IndexComponents/indexheader';
 import IndexNotification from '@/components/IndexComponents/indexnotifications';
 import IndexTreatmentPlan from '@/components/IndexComponents/indextreatmentplan';
 import IndexContacts from '@/components/IndexComponents/indexcontact';
-import { useNavigation } from "expo-router";
+import IndexGame from "@/components/IndexComponents/indexgame";
+import IndexSpacer from "@/components/IndexComponents/indexspacer";
 
 export default function Index() {
-  const navigation = useNavigation();
-
  return (
     <View style={style.main}>
       <ScrollView
@@ -19,6 +18,12 @@ export default function Index() {
         </View>
         <View style={style.components}>
           <IndexNotification />
+        </View>
+        <View style={style.components}>
+          <IndexGame />
+        </View>
+        <View style={style.components}>
+          <IndexSpacer />
         </View>
         <View style={style.components}>
           <IndexTreatmentPlan />
@@ -40,10 +45,10 @@ const style = StyleSheet.create({
     },
 
     components: {
-      marginTop: 50
+      marginTop: 40
     },
 
     end: {
-      marginTop: 5
+      marginTop: 15
     }
 });
