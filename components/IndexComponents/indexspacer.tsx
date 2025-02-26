@@ -5,8 +5,6 @@ import { placeholder } from "@/placeholder/placeholder";
 import { User } from "./objects/user";
 import { Spacer } from "./objects/spacer";
 
-import 'react-battery-gauge';
-
 export default function IndexSpacer() {
  const [user, setUser] = useState<User>(placeholder.user);
  const [spacer, setSpacer] = useState<Spacer>(placeholder.spacer);
@@ -22,16 +20,31 @@ export default function IndexSpacer() {
             <Text>{spacer.SerialNum}</Text>
           </View>
           <View style={style.imageContainer}>
-            <Text style={style.spacerDetails}>Full Charge</Text>
-            <Text style={style.spacerDetails}>{charge}%</Text>
+            <Image
+              source={require('../../assets/images/Battery.png')}
+            />
+            <View>
+              <Text style={style.spacerDetails}>Battery Remaining:</Text>
+              <Text style={style.spacerDetails}>{charge}%</Text>
+            </View>
           </View>
           <View style={style.imageContainer}>
             <Image
-              style={style.icons}
               source={require('../../assets/images/bluetooth.png')}
             />
-            <Text style={style.spacerDetails}>Bluetooth</Text>
-            <Text style={style.spacerDetails}>{spacer.Paired ? "Paired" : "Not Connected"}</Text>
+            <View>
+              <Text style={style.spacerDetails}>Bluetooth</Text>
+              <Text style={style.spacerDetails}>{spacer.Paired ? "Paired" : "Not Connected"}</Text>
+            </View>
+          </View>
+          <View style={style.imageContainer}>
+            <Image
+              source={require('../../assets/images/sync.png')}
+            />
+            <View>
+              <Text style={style.spacerDetails}>Data Last Updated:</Text>
+              <Text style={style.spacerDetails}>Now</Text>
+            </View>
           </View>
         </View>
         <Image
@@ -46,7 +59,7 @@ const style = StyleSheet.create({
     backgroundColor: "#E1E1E1",
     flexDirection: "row",
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 20,
     borderRadius: 10
   },
 
@@ -56,10 +69,10 @@ const style = StyleSheet.create({
   },
 
   titleContainer: {
+    paddingLeft: 5
   },
 
   title: {
-    paddingLeft: 15,
     fontSize: 25,
     fontWeight: "bold"
   },
@@ -77,6 +90,6 @@ const style = StyleSheet.create({
   },
 
   spacerDetails: {
-    paddingLeft: 5
+    paddingLeft: 10
   }
 });
