@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Text, View, StyleSheet, Pressable, TouchableOpacity } from "react-native";
-import { User } from './objects/user';
+import { User } from '../objects/user';
 import { placeholder } from '@/placeholder/placeholder';
 import { Image } from 'expo-image';
 

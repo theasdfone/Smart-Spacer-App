@@ -2,8 +2,8 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import { useState } from "react";
 
 import { placeholder } from "@/placeholder/placeholder";
-import { User } from "./objects/user";
-import { Spacer } from "./objects/spacer";
+import { User } from "../objects/user";
+import { Spacer } from "../objects/spacer";
 
 export default function IndexSpacer() {
  const [user, setUser] = useState<User>(placeholder.user);
