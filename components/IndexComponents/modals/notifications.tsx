@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Pressable, ScrollView, Image, Modal } from "react-native";
-import { Notif } from "../objects/notification";
+import { Notif } from "../../objects/notification";
 
 type Props = {
   notifications: Notif[],
