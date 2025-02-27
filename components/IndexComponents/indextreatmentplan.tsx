@@ -77,7 +77,7 @@ export default function IndexTreatment() {
 
 const style = StyleSheet.create({
   main: {
-    backgroundColor: "#E1E1E1",
+    backgroundColor: "#E9E9E9",
     flexGrow: 1,
     paddingTop: 10,
     paddingBottom: 10,
@@ -162,6 +162,7 @@ const style = StyleSheet.create({
       width: 0,
       height: 2,
     },
+    
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
