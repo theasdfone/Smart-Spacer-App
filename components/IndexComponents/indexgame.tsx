@@ -45,7 +45,7 @@ const style = StyleSheet.create({
         width: 175,
         borderRadius: 40,
         justifyContent: "center"
-      },
+    },
   
     text: {
       color: "white",

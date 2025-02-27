@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { Text, View, StyleSheet } from "react-native";
 
-export default function graphScreen() {
+export default function GraphScreen() {
 
  return (
     <View style={style.main}>

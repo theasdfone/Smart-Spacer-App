@@ -64,7 +64,7 @@ const style = StyleSheet.create({
   },
 
   contactMain: {
-    backgroundColor: "#E1E1E1",
+    backgroundColor: "#E9E9E9",
     height: 150,
     paddingTop: 10,
     borderRadius: 10,
@@ -74,7 +74,7 @@ const style = StyleSheet.create({
   },
 
   emergencyMain: {
-    backgroundColor: "#E1E1E1",
+    backgroundColor: "#E9E9E9",
     height: 150,
     paddingTop: 10,
     borderRadius: 10,

@@ -56,7 +56,7 @@ export default function IndexSpacer() {
 
 const style = StyleSheet.create({
   main: {
-    backgroundColor: "#E1E1E1",
+    backgroundColor: "#E9E9E9",
     flexDirection: "row",
     paddingTop: 10,
     paddingBottom: 20,
