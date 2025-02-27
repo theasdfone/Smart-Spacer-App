@@ -44,7 +44,7 @@ const style = StyleSheet.create({
   },
 
   components: {
-    marginTop: 40,
+    marginTop: 20,
     paddingHorizontal: 20
   },
 

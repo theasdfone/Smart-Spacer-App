@@ -38,7 +38,7 @@ const style = StyleSheet.create({
     paddingTop: 20,
     borderRadius: 10,
     paddingHorizontal: 20,
-    width: "50%",
+    width: "47%",
     marginRight: "3%"
   },
 
