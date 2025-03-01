@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Text, View, StyleSheet, Pressable, Dimensions } from "react-native";
-import { User } from "../objects/user";
-import { placeholder } from "@/placeholder/placeholder";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
 import GraphTabMenu from "./graphtabmenu";
+import { LineChart } from "react-native-gifted-charts";
+
 
 export default function GraphPeakFlow() {
-    const [user, setUser] = useState<User>(placeholder.user);
+    const data=[ {value:50}, {value:80}, {value:90}, {value:70} ]
 
     return (
        <View>
@@ -13,8 +13,12 @@ export default function GraphPeakFlow() {
             <View style={style.tabComponent}>
                 <GraphTabMenu />
             </View>
-            <View>
-
+            <View style={style.chartComponent}>
+                <LineChart 
+                    data = {data}
+                    width={350}
+                    spacing={100}
+                />
             </View>
        </View>
     );
@@ -28,5 +32,9 @@ const style = StyleSheet.create({
 
     tabComponent: {
         marginTop: 10
+    },
+
+    chartComponent: {
+        marginTop: 15
     }
 });
