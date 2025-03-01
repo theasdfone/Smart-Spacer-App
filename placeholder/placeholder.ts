@@ -189,5 +189,94 @@ export const placeholder = {
         SerialNum: "1234567890",
         Percentage: 0.6,
         Paired: true,
-    }
+    },
+
+    journal: [
+      {
+        JournalId: 1,
+        ChildId: 1,
+        Date: new Date(),
+        Score: 27,
+        Description: "asdfasdfasdfasdf",
+        Hospitalizations: 1,
+        Allergy: 1
+      },
+      {
+        JournalId: 2,
+        ChildId: 1,
+        Date: new Date("2025-02-26"),
+        Score: 26,
+        Description: "asdfasdfasdfasdf",
+        Hospitalizations: 0,
+        Allergy: 0
+      },
+      {
+        JournalId: 3,
+        ChildId: 1,
+        Date: new Date("2025-02-23"),
+        Score: 29,
+        Description: "asdfasdfasdfasdf",
+        Hospitalizations: 0,
+        Allergy: 0
+      }
+    ],
+
+    spaceruse: [
+      {
+        SpacerUseId: 1,
+        ChildId: 1,
+        DateTime: new Date(),
+        MorningTechnique: 1,
+        EveningTechnique: 1,
+        RelieverCount: 1,
+      },
+      {
+        SpacerUseId: 2,
+        ChildId: 1,
+        DateTime: new Date(),
+        MorningTechnique: 1,
+        EveningTechnique: 3,
+        RelieverCount: 2,
+      },
+      {
+        SpacerUseId: 3,
+        ChildId: 1,
+        DateTime: new Date(),
+        MorningTechnique: 1,
+        EveningTechnique: 2,
+        RelieverCount: 2,
+      },
+      {
+        SpacerUseId: 4,
+        ChildId: 1,
+        DateTime: new Date(),
+        MorningTechnique: 1,
+        EveningTechnique: 1,
+        RelieverCount: 3,
+      },
+      {
+        SpacerUseId: 5,
+        ChildId: 1,
+        DateTime: new Date(),
+        MorningTechnique: 3,
+        EveningTechnique: 3,
+        RelieverCount: 1,
+      },
+      {
+        SpacerUseId: 6,
+        ChildId: 1,
+        DateTime: new Date(),
+        MorningTechnique: 2,
+        EveningTechnique: 1,
+        RelieverCount: 1,
+      },
+      {
+        SpacerUseId: 7,
+        ChildId: 1,
+        DateTime: new Date(),
+        MorningTechnique: 3,
+        EveningTechnique: 1,
+        RelieverCount: 1,
+      }
+    ]
 }
