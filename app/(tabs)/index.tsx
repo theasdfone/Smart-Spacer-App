@@ -6,10 +6,11 @@ import IndexTreatmentPlan from '@/components/IndexComponents/indextreatmentplan'
 import IndexContacts from '@/components/IndexComponents/indexcontact';
 import IndexGame from "@/components/IndexComponents/indexgame";
 import IndexSpacer from "@/components/IndexComponents/indexspacer";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
  return (
-    <View style={style.main}>
+    <SafeAreaView style={style.main}>
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
@@ -33,7 +34,7 @@ export default function Index() {
         </View>
         <View style={style.end}></View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

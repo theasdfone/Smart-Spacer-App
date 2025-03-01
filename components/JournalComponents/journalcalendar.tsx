@@ -4,7 +4,9 @@ import CalendarStrip from 'react-native-calendar-strip';
 
 import * as ImagePicker from 'expo-image-picker';
 import Profile from "../util/profilepicture";
-import moment from "moment";
+import moment, { Moment } from "moment";
+import { placeholder } from "@/placeholder/placeholder";
+import { Journal } from "../objects/journal";
 
 type Props = {
     setSelectedDate: React.Dispatch<React.SetStateAction<any>>; 
@@ -14,6 +16,8 @@ export default function JournalCalendar({setSelectedDate} : Props) {
         const [image, setImage] = useState<string | undefined>(undefined);
         const [calendarMonth, setCalendarMonth] = useState<string>("");
         const defaultImg = require('@/assets/images/icon.png');
+
+        const [start, setStart] = useState<Moment>();
     
         const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -28,6 +32,19 @@ export default function JournalCalendar({setSelectedDate} : Props) {
         }
       };
 
+      let markedDatesArray : any = [];
+
+      placeholder.journal.map((item, i) => {
+        markedDatesArray.push({
+            date: item.Date,
+            dots: [
+              {
+                color: "green",
+              },
+            ],
+        });
+      });
+
  return (
     <View style={style.shadows}>
         <View style={style.container}>
@@ -39,17 +56,19 @@ export default function JournalCalendar({setSelectedDate} : Props) {
             </View>
 
             <CalendarStrip 
-                rightSelector={[]}
-                leftSelector={[]}
-                scrollable={true}
                 showMonth={false}
                 style={{
-                    height: 75
+                    height: 75,
+                    paddingHorizontal: 20
                 }}
                 calendarHeaderStyle={{ fontSize: 24 }}
-                selectedDate={moment()}
-                onWeekChanged={(start, end) => setCalendarMonth(start.format("MMMM YYYY").toString())}
-                onDateSelected={(date) => setSelectedDate(date.format("dddd, MMMM Do YYYY").toString())}
+                onWeekChanged={(start, end) => {
+                    setCalendarMonth(start.format("MMMM YYYY").toString());
+                }}
+                onDateSelected={(date) => {
+                    setSelectedDate(date.format("dddd, MMMM Do YYYY").toString());
+                }}
+                markedDates={markedDatesArray}
             />
         </View>
     </View>
