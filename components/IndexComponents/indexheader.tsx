@@ -29,7 +29,7 @@ export default function IndexHeader() {
 
  return (
       <View style={style.welcome}>
-        <View style={style.imgheader}>
+        <View style={style.navbar}>
           <Text style={style.header}>Welcome {user.Username}!</Text>
           <Pressable style={style.profile} onPress={pickImage}>
               <Profile imgSource={defaultImg} selectedImage={image} />
@@ -46,7 +46,7 @@ const style = StyleSheet.create({
       flex: 1,
     },
 
-    imgheader: {
+    navbar: {
       flexDirection: 'row',
       paddingBottom: 10,
       alignItems: "center"
@@ -60,6 +60,6 @@ const style = StyleSheet.create({
 
     header: {
       fontSize: 40,
-      width: "80%"
+      width: "85%"
     },
 });
