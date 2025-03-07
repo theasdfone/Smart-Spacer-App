@@ -35,6 +35,12 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="book" color={color}/>
         }}/>
+        <Tabs.Screen name="profile" 
+        options={{
+          title: 'Profile',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="book" color={color}/>
+        }}/>
       </Tabs>
   );
 }

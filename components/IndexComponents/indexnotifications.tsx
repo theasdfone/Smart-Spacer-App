@@ -26,7 +26,6 @@ export default function IndexNotification() {
           <SafeAreaView style={style.centeredView}>
             <Modal
               animationType="slide"
-              transparent={true}
               visible={modalVisible}
               onRequestClose={() => {
                 setModalVisible(!modalVisible);

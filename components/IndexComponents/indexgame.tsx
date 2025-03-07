@@ -3,21 +3,28 @@ import { Text, View, StyleSheet, Pressable, TouchableOpacity } from "react-nativ
 import { User } from '../objects/user';
 import { placeholder } from '@/placeholder/placeholder';
 import { Image } from 'expo-image';
+import GameHeader from '../GameComponent/gameheader/gameheader';
 
 export default function IndexGame() {
     const [user, setUser] = useState<User>(placeholder.user);
     const defaultImg = require('@/assets/images/dog.png');
+    const [modalVisible, setModalVisible] = useState(false);
 
  return (
     <View style={style.mainContainer}>
       <TouchableOpacity
         style={style.gameButton}
+        onPress={() => setModalVisible(true)}
       >
         <View style={style.contentContainer}>
             <Image style={style.profile} source={defaultImg} />
             <Text style={style.text}>Go to {user.Username}'s Pet</Text>
         </View>
       </TouchableOpacity>
+      <GameHeader 
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
     </View>
   );
 }
