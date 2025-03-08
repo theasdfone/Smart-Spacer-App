@@ -181,7 +181,6 @@ const style = StyleSheet.create({
   title: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: 320
   },
 
   description: {

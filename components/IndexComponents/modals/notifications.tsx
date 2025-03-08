@@ -23,7 +23,7 @@ export default function Notifications({notifications} : Props) {
                 </View>
                 <View>
                   <View style={style.title}>
-                    <Text style={style.left}>{notif.Title}</Text>
+                    <Text>{notif.Title}</Text>
                     <Text>{notif.Time}</Text>
                   </View>
                   <Text style={style.description} numberOfLines={1}>{notif.Description}</Text>
@@ -41,7 +41,7 @@ const style = StyleSheet.create({
   notification: {
     backgroundColor: "#E1E1E1",
     flexGrow: 1,
-    padding: 5,
+    paddingVertical: 5,
     marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
@@ -67,10 +67,10 @@ const style = StyleSheet.create({
   title: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: 320
   },
 
   description: {
-    width: 250
+    width: 250,
+    paddingTop: 5
   },  
 });

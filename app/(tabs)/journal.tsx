@@ -4,7 +4,7 @@ import JournalFacts from "@/components/JournalComponents/journalfact";
 import JournalInsights from "@/components/JournalComponents/journalinsights";
 import moment from "moment";
 import { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function JournalScreen() {
@@ -12,23 +12,27 @@ export default function JournalScreen() {
 
  return (
     <SafeAreaView style={style.main}>
-      <View style={style.calendar}>
-        <JournalCalendar
-          setSelectedDate={setSelectedDate}
-        />
-      </View>
-      <View style={style.components}>
-        <JournalDailyLog 
-          selectedDate={selectedDate}
-        />
-      </View>
-      <View style={style.components}>
-        <JournalInsights />
-      </View>
-      <View style={style.components}>
-        <JournalFacts />
-      </View>
-      <View style={style.end}></View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={style.calendar}>
+          <JournalCalendar
+            setSelectedDate={setSelectedDate}
+          />
+        </View>
+        <View style={style.components}>
+          <JournalDailyLog 
+            selectedDate={selectedDate}
+          />
+        </View>
+        <View style={style.components}>
+          <JournalInsights />
+        </View>
+        <View style={style.components}>
+          <JournalFacts />
+        </View>
+        <View style={style.end}></View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -25,6 +25,11 @@
     },
     "plugins": [
       "expo-router",
+      ["react-native-ble-plx",
+        {
+          "modes": ["peripheral", "central"]
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -38,19 +43,6 @@
         "expo-image-picker",
         {
           "cameraPermission": "Allow smart spacer app to access your camera"
-        }
-      ],
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/notification_icon.png",
-          "color": "#ffffff",
-          "defaultChannel": "default",
-          "sounds": [
-            "./local/assets/notification_sound.wav",
-            "./local/assets/notification_sound_other.wav"
-          ],
-          "enableBackgroundRemoteNotifications": false
         }
       ]
     ],
