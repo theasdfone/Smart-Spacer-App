@@ -28,8 +28,8 @@ export default function JournalFacts() {
 const style = StyleSheet.create({
     main: {
       backgroundColor: "#E9E9E9",
-      height: 200,
-      paddingTop: 20,
+      height: "auto",
+      paddingVertical: 20,
       borderRadius: 10,
       paddingHorizontal: 20,
       width: "100%"

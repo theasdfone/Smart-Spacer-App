@@ -1,10 +1,9 @@
-import Bluetooth from "@/components/BluetoothComponent/bluetooth";
+import BluetoothComponent from "@/components/BluetoothComponent/bluetoothcomponent";
 import CarouselComponent from "@/components/util/carousel/carousel";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile() {
-
   // You'll need at least 4 items in the array here
   const data = [
     require("../../assets/images/adaptive-icon.png"),
@@ -32,7 +31,7 @@ export default function Profile() {
             />
         </View>
         <View style={style.components}>
-            <Bluetooth />
+            <BluetoothComponent />
         </View>
         <View style={style.end}></View>
       </ScrollView>

@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     flexDirection: "row",
-    width: "95%",
     borderWidth: 1,
     borderRadius: 20
   },
@@ -39,5 +38,6 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 20,
     marginLeft: 10,
+    width: "95%",
   },
 });

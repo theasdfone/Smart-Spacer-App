@@ -10,7 +10,8 @@ export default function TabsLayout() {
       screenOptions={{
         tabBarStyle: {
           height: 70 + insets.bottom,
-        }
+        },
+        tabBarHideOnKeyboard: true,
       }}>
         <Tabs.Screen name ="index" options={{
           title: 'Home',

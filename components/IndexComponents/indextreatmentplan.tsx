@@ -101,6 +101,7 @@ const style = StyleSheet.create({
   },
 
   inhalerText: {
+    paddingRight: 20,
     paddingBottom: 3
   },
   
@@ -131,7 +132,8 @@ const style = StyleSheet.create({
 
   editContainer: {
     alignItems:"flex-end",
-    paddingRight: 10
+    paddingRight: 10,
+    paddingTop: 20
   },
 
   editButton: {

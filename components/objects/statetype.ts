@@ -1,0 +1,1 @@
+export type StateType = 'DONE' | 'WAITING' | 'ERROR' | 'IN_PROGRESS'
