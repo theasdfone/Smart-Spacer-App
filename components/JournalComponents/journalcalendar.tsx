@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Profile from "../util/profilepicture";
 import moment, { Moment } from "moment";
 import { placeholder } from "@/placeholder/placeholder";
-import { Journal } from "../objects/journal";
+import { Journal } from "../models/journal";
 
 type Props = {
     setSelectedDate: React.Dispatch<React.SetStateAction<any>>; 

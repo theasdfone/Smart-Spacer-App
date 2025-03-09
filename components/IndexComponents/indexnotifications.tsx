@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Image, Text, View, StyleSheet, TouchableOpacity, Pressable, Modal } from "react-native";
 
-import { Notif } from '../objects/notification';
+import { Notif } from '../models/notification';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Profile from '../util/profilepicture';
 import Notifications from './modals/notifications';

@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, Pressable } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 
 import Profile from '../util/profilepicture';
-import { HealthcareProvider } from '../objects/provider';
-import { User } from '../objects/user';
+import { HealthcareProvider } from '../models/provider';
+import { User } from '../models/user';
 import { placeholder } from '@/placeholder/placeholder';
 
 export default function IndexHeader() {

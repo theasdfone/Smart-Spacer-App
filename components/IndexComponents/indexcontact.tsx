@@ -3,7 +3,7 @@ import { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 
 import Profile from '../util/profilepicture';
-import { HealthcareProvider } from "../objects/provider";
+import { HealthcareProvider } from "../models/provider";
 import { placeholder } from "@/placeholder/placeholder";
 
 export default function IndexContacts() {
