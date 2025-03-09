@@ -11,86 +11,81 @@ export default function IndexNotification() {
   const [notifications, setNotifications] = useState<Notif[]>(placeholder.notifications);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [image, setImage] = useState<string | undefined>(undefined);
-  const defaultImg = require('@/assets/images/icon.png');
-
- return (
+  return (
+    <View>
+      <Text style={style.header}>Notifications</Text>
       <View>
-        <Text style={style.header}>Notifications</Text>
-        <View>
-          {
-            checkNotificationLength(notifications, setModalVisible)
-          }
-        </View>
-        <SafeAreaProvider>
-          <SafeAreaView style={style.centeredView}>
-            <Modal
-              animationType="slide"
-              visible={modalVisible}
-              onRequestClose={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <View style={style.centeredView}>
-                <View style={style.modalView}>
-                  <View style={style.imgheader}>
-                    <Text style={style.seeMoreHeader}>Notifications</Text>
-                    <Pressable style={style.profile}>
-                        <Profile imgSource={defaultImg} selectedImage={image} />
-                    </Pressable>
+        {
+          checkNotificationLength(notifications, setModalVisible)
+        }
+      </View>
+      <SafeAreaProvider>
+        <SafeAreaView style={style.centeredView}>
+          <Modal
+            animationType="slide"
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={style.centeredView}>
+              <View style={style.modalView}>
+                <View style={style.imgheader}>
+                  <Text style={style.seeMoreHeader}>Notifications</Text>
+                  <Profile />
+                </View>
+                <View style={style.modalNotificationContainer}>
+                  <Notifications
+                    notifications={notifications}
+                  />
+                </View>
+                <View style={style.modalTabBar}>
+                  <View style={style.buttonContainer}>
+                    <TouchableOpacity
+                      style={style.button}
+                      onPress={() => setModalVisible(false)}
+                    >
+                      <Text style={style.buttonText}>See Less</Text>
+                      <View style={style.dropdownBackground}>
+                        <Image
+                          style={style.dropdown}
+                          source={require('../../assets/images/up-chevron.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                  <View style={style.modalNotificationContainer}>
-                    <Notifications 
-                      notifications={notifications}
-                    />
-                  </View>
-                  <View style={style.modalTabBar}>
-                    <View style={style.buttonContainer}>
-                      <TouchableOpacity
-                        style={style.button}
-                        onPress={() => setModalVisible(false)}
-                      >
-                        <Text style={style.buttonText}>See Less</Text>
-                        <View style={style.dropdownBackground}>
-                          <Image 
-                            style={style.dropdown}
-                            source={require('../../assets/images/up-chevron.png')}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={style.buttonContainer}>
-                      <TouchableOpacity
-                        style={style.button}
-                        onPress={() => setModalVisible(false)}
-                      >
-                        <Text style={style.buttonText}>Clear All</Text>
-                        <View style={style.dropdownBackground}>
-                          <Image 
-                            style={style.dropdown}
-                            source={require('../../assets/images/x-delete.png')}
-                          />
-                        </View>
-                      </TouchableOpacity>
-                    </View>
+                  <View style={style.buttonContainer}>
+                    <TouchableOpacity
+                      style={style.button}
+                      onPress={() => setModalVisible(false)}
+                    >
+                      <Text style={style.buttonText}>Clear All</Text>
+                      <View style={style.dropdownBackground}>
+                        <Image
+                          style={style.dropdown}
+                          source={require('../../assets/images/x-delete.png')}
+                        />
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
-            </Modal>
-          </SafeAreaView>
-        </SafeAreaProvider>
-      </View>
+            </View>
+          </Modal>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </View>
   );
 }
 
 function checkNotificationLength(notifications: Notif[], setModalVisible: Dispatch<SetStateAction<boolean>>) {
 
-  if(notifications == undefined || notifications.length < 1) {
-    return(
+  if (notifications == undefined || notifications.length < 1) {
+    return (
       <View style={style.notifContainer}>
         <Text style={style.emptyTitle}>There are no new messages</Text>
         <Text>You're all caught up!</Text>
-        <Image 
+        <Image
           style={style.emptyMailbox}
           source={require('../../assets/images/empty-inbox.png')}
         />
@@ -98,14 +93,14 @@ function checkNotificationLength(notifications: Notif[], setModalVisible: Dispat
     )
   }
 
-  return(
+  return (
     <View>
       {
-        notifications.slice(0,3).map((notif) => {
-          return(
-            <View key={notif.NotifId} style= {style.notification}>
+        notifications.slice(0, 3).map((notif) => {
+          return (
+            <View key={notif.NotifId} style={style.notification}>
               <View style={style.iconBackground}>
-                <Image 
+                <Image
                   style={style.bellIcon}
                   source={require('../../assets/images/bell-regular.png')}
                 />
@@ -128,7 +123,7 @@ function checkNotificationLength(notifications: Notif[], setModalVisible: Dispat
         >
           <Text style={style.buttonText}>See More</Text>
           <View style={style.dropdownBackground}>
-            <Image 
+            <Image
               style={style.dropdown}
               source={require('../../assets/images/down-chevron.png')}
             />
@@ -161,7 +156,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
   },
-  
+
   bellIcon: {
     height: 18,
     width: 18,
@@ -198,7 +193,7 @@ const style = StyleSheet.create({
     backgroundColor: "#E9E9E9",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent:"center"
+    justifyContent: "center"
   },
 
   buttonText: {
@@ -265,12 +260,6 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
 
-  profile: {
-    height: 40,
-    width: 40,
-    borderRadius: 40,
-  },
-
   modalNotificationContainer: {
     height: "80%",
     paddingBottom: 10
@@ -278,7 +267,7 @@ const style = StyleSheet.create({
 
   modalTabBar: {
     flexDirection: "row",
-    justifyContent:"center",
+    justifyContent: "center",
     gap: 20
   }
 });
