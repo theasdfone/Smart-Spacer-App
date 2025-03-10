@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Text, View, StyleSheet, Pressable } from "react-native";
-import { User } from "../objects/user";
+import { User } from "../models/user";
 import { placeholder } from "@/placeholder/placeholder";
 
 export default function GraphSchedule() {

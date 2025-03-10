@@ -3,7 +3,7 @@ import { Image } from "expo-image";
 import { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import CalendarStrip from 'react-native-calendar-strip';
-import { SpacerUse } from "../objects/spaceruse";
+import { SpacerUse } from "../models/spaceruse";
 
 export default function GraphCalendar() {
     // Todo: Write an API which takes the start and end dates and returns a list of data of whether 

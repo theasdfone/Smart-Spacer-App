@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Modal, Image, Pressable, TouchableOpacity } fro
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import ProgressBar from 'react-native-progress/Bar';
 
-import { Inhaler } from '../objects/inhaler';
+import { Inhaler } from '../models/inhaler';
 import { placeholder } from "@/placeholder/placeholder";
 
 export default function IndexTreatment() {
