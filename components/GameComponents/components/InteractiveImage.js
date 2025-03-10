@@ -10,8 +10,7 @@ const InteractiveImage = ({ image, imageSize, onPressIn }) => {
         style={[{ width: imageSize.width, height: imageSize.height }]}
         resizeMode="contain"
         onLayout={(event) => {
-          const { width, height } = event.nativeEvent.layout;
-          onPressIn({ nativeEvent: { locationY: height / 2 } }); // Example, adjust as needed
+          onPressIn({ nativeEvent: { locationY: imageSize.height / 2 } }); // Example, adjust as needed
         }}
       />
     </TouchableOpacity>

@@ -12,8 +12,8 @@ export const toggleTask = (tasks, setTasks, id, addExpFunction) => {
   setTasks(
     tasks.map((task) => {
       if (task.id === id && !task.completed) {
-        addExpFunction(task.reward); // Use the passed addExp function
-        return { ...task, completed: true };
+        addExpFunction(task.reward); // Add the task's reward points
+        return { ...task, completed: true }; // Mark the task as completed
       }
       return task;
     })

@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-evenly",
-    marginTop: 20,
+    marginBottom: 50,
+    paddingHorizontal: 20,
   },
   buttonImage: {
     width: 80, // Adjust size as needed

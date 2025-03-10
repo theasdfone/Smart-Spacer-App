@@ -14,9 +14,11 @@ const FullScreenImageModal = ({
   onClose,
   backgroundImage,
   image,
+  imageSize,
   carouselImages,
   color,
   onSelectImage,
+  selectedImage,
 }) => {
   return (
     <Modal animationType="fade" transparent={false} visible={visible}>
@@ -28,33 +30,41 @@ const FullScreenImageModal = ({
           resizeMode="cover"
         />
         <Text style={styles.modalText}>This is {color} screen!</Text>
-        <Image
-          source={image}
-          style={{ width: 150, height: 150 }}
-          resizeMode="contain"
-        />
+        <View style={{ top: 60 }}>
+          <Image
+            source={selectedImage || image}
+            style={imageSize}
+            resizeMode="contain"
+          />
+        </View>
+
         {/* Carousel Image Buttons */}
-        <View style={styles.carouselContainer}>
+
+        {/* <View style={styles.carouselContainer}>
           {carouselImages.map((carouselImage, index) => (
             <TouchableOpacity
               key={index}
-              onPress={() => onSelectImage(carouselImage.image)} // Update the main image
+              onPress={() => onSelectImage(carouselImage)} // Update the main image
               style={[
                 styles.carouselImageContainer,
                 image === carouselImage.image && styles.selectedImageContainer, // Highlight selected image
               ]}
             >
               <Image
-                source={carouselImage.image}
+                source={carouselImage}
                 style={styles.carouselImage}
                 resizeMode="contain"
               />
             </TouchableOpacity>
           ))}
-        </View>
+        </View> */}
+
         {/* Close Button */}
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Text style={styles.buttonText}>Close</Text>
+          <Image
+            source={require("../buttons/ExitButton.png")} // Use the image for the close button
+            style={styles.closeButtonImage}
+          />
         </TouchableOpacity>
       </View>
     </Modal>
@@ -103,15 +113,14 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 40,
-    right: 20,
-    backgroundColor: "#007BFF",
+    top: 30,
+    right: 30,
     padding: 10,
     borderRadius: 5,
   },
-  buttonText: {
-    fontSize: 16,
-    color: "#fff",
+  closeButtonImage: {
+    width: 40, // Adjust the size as needed
+    height: 40,
   },
 });
 
