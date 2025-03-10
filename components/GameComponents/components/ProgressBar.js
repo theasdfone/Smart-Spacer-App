@@ -37,14 +37,15 @@ ProgressBar.defaultProps = {
 
 const styles = StyleSheet.create({
   progressBarContainer: {
-    width: "100%",
-    height: 20,
-    borderRadius: 10,
+    width: "50%",
     overflow: "hidden",
-    marginBottom: 20,
+    borderWidth: 6,
+    borderColor: "#5a575D",
+    marginLeft: -6,
   },
   progressBar: {
     height: "100%",
+    marginLeft: 0,
   }, // Default props
 });
 

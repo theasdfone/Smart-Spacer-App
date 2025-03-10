@@ -1,10 +1,7 @@
-import { StatusBar } from 'expo-status-bar'; 
 import { useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import { GameEngine } from "react-native-game-engine";
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import GameScreen from './GameScreen';
-import { ImageBackground } from 'expo-image';
 
 type Props = {
   modalVisible: boolean
@@ -38,7 +35,7 @@ export default function GameHeader({modalVisible, setModalVisible} : Props){
               <View style={styles.dropdownBackground}>
                 <Image 
                   style={styles.dropdown}
-                  source={require('../../../assets/images/x-delete.png')}
+                  source={require('../../assets/images/x-delete.png')}
                 />
               </View>
             </TouchableOpacity>
