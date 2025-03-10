@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Pressable, TouchableOpacity } from "react-nativ
 import { User } from '../models/user';
 import { placeholder } from '@/placeholder/placeholder';
 import { Image } from 'expo-image';
-import GameHeader from '../GameComponent/gameheader/gameheader';
+import GameHeader from '../GameComponents/gameheader';
 
 export default function IndexGame() {
     const [user, setUser] = useState<User>(placeholder.user);
