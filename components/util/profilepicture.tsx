@@ -1,7 +1,10 @@
 import { Pressable, StyleSheet } from 'react-native';
 import { Image } from "expo-image";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { router } from 'expo-router';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profile() {
   const [image, setImage] = useState<string | undefined>(undefined);
@@ -22,8 +25,23 @@ export default function Profile() {
     }
   };
 
+  const logout = async () => {
+    try {
+        // Sign out from Google
+        await GoogleSignin.signOut();
+
+        // Remove user data from AsyncStorage
+        await AsyncStorage.removeItem('user');
+
+        // Redirect to login screen
+        router.navigate("/loginpage");
+    } catch (error) {
+        console.error("Error signing out:", error);
+    }
+};
+
   return (
-    <Pressable style={styles.profile} onPress={pickImage}>
+    <Pressable style={styles.profile} onPress={logout}>
       <Image source={imageSource} style={styles.image} />
     </Pressable>
   );
