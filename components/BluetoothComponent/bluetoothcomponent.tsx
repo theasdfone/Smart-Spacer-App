@@ -1,115 +1,122 @@
-import { BLEService } from "@/services/bluetooth/bluetooth";
-import React, { useState } from "react";
-import { FlatList, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
-import type { StateType } from '../objects/statetype'
-import { Device } from "react-native-ble-plx";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { BleManager, Device } from "react-native-ble-plx";
 
-type DeviceExtendedByUpdateTime = Device & { updateTimestamp: number }
+const bleManager = new BleManager();
 
-const MIN_TIME_BEFORE_UPDATE_IN_MILLISECONDS = 5000
+const DEVICE_NAME = "Smart Spacer";
+const SERVICE_UUID = "ab49b033-1163-48db-931c-9c2a3002ee1d";
+const STEPCOUNT_CHARACTERISTIC_UUID = "fbb6411e-26a7-44fb-b7a3-a343e2b011fe";
 
 export default function BluetoothComponent() {
-    const [isConnecting, setIsConnecting] = useState(false)
-    const [foundDevices, setFoundDevices] = useState<DeviceExtendedByUpdateTime[]>([])
-    const [connectedDevice, setConnectedDevice] = useState<Device | null>(null)
+    const [connectionStatus, setConnectionStatus] = useState("Searching...");
+    const [isConnected, setIsConnected] = useState<boolean>(false);
+    const [device, setDevice] = useState<Device | null>(null);
+    const [stepCount, setStepCount] = useState(-1);
 
-    const addFoundDevice = (device: Device) =>
-        setFoundDevices(prevState => {
-          if (!isFoundDeviceUpdateNecessary(prevState, device)) {
-            return prevState
-          }
-          // deep clone
-          const nextState = JSON.parse(JSON.stringify(prevState))
-          const extendedDevice: DeviceExtendedByUpdateTime = {
-            ...device,
-            updateTimestamp: Date.now() + MIN_TIME_BEFORE_UPDATE_IN_MILLISECONDS
-          } as DeviceExtendedByUpdateTime
-    
-          const indexToReplace = nextState.findIndex((currentDevice:Device) => currentDevice.id === device.id)
-          if (indexToReplace === -1) {
-            return nextState.concat(extendedDevice)
-          }
-          nextState[indexToReplace] = extendedDevice
-          return nextState
-        })
+    useEffect(() => {
+        searchAndConnectToDevice();
+    }, []);
 
-        const isFoundDeviceUpdateNecessary = (currentDevices: DeviceExtendedByUpdateTime[], updatedDevice: Device) => {
-            const currentDevice = currentDevices.find(({ id }) => updatedDevice.id === id)
-            if (!currentDevice) {
-              return true
+    useEffect(() => {
+        if (!device) {
+            return;
+        }
+
+        const subscription = bleManager.onDeviceDisconnected(
+            device.id,
+            (error, device) => {
+                if (error) {
+                    console.log("Disconnected with error:", error);
+                }
+                setConnectionStatus("Disconnected");
+                setIsConnected(false);
+                console.log("Disconnected device");
+                if (device) {
+                    setConnectionStatus("Reconnecting...");
+                    connectToDevice(device)
+                        .then(() => {
+                            setConnectionStatus("Connected");
+                            setIsConnected(true);
+                        })
+                        .catch((error) => {
+                            console.log("Reconnection failed: ", error);
+                            setConnectionStatus("Reconnection failed");
+                            setIsConnected(false);
+                            setDevice(null);
+                        });
+                }
             }
-            return currentDevice.updateTimestamp < Date.now()
-          }
-         
-          const onConnectSuccess = () => {
-            setIsConnecting(false)
-          }
-        
-          const onConnectFail = () => {
-            setIsConnecting(false)
-          }
+        );
 
-      const deviceRender = (device: Device) => (
-        <TouchableOpacity
-            style={style.container}
-          onPress={() => {
-            setIsConnecting(true)
-            BLEService.connectToDevice(device.id).then(() =>{
-                onConnectSuccess
-                setConnectedDevice(BLEService.getDevice)
-            }).catch(onConnectFail)
-          }}
-          key={device.id}
-        >
-            <Text>{device.id}</Text>
-            <Text>{device.name}</Text>
-        </TouchableOpacity>
-      )
-      
-  return (
-    <View>
-        <View>
-          <Text>Connected Devices:</Text>
-        </View>
-        <Text>{JSON.stringify(connectedDevice, null, 4)}</Text>
-        <View style={{marginBottom: 50}}>
-            <TouchableOpacity
-                style={style.main}
-                onPress={() => {
-                    setFoundDevices([])
-                    BLEService.initializeBLE().then(() => BLEService.scanDevices(addFoundDevice, null, true))
-                }}
-            >
-                <Text>Discover Device</Text>
-            </TouchableOpacity>
+        return () => subscription.remove();
+    }, [device]);
 
-            <TouchableOpacity
-                style={style.main}
-                onPress={() => {
-                    BLEService.disconnectDevice().then(() => {
-                        setConnectedDevice(BLEService.getDevice)
-                    })
-                }}
-            >
-                <Text>Disconnect Device</Text>
-            </TouchableOpacity>
-        </View>
+    useEffect(() => {
+        if (!device || !device.isConnected) {
+            return
+        }
 
-
-        <FlatList
-            style={{ flex: 1 }}
-            data={foundDevices}
-            renderItem={({ item }) => {
-                if(item.name == "Smart Spacer") {
-                    return deviceRender(item);
+        const sub = device.monitorCharacteristicForService(
+            SERVICE_UUID,
+            STEPCOUNT_CHARACTERISTIC_UUID,
+            (error, char) => {
+                if (error || !char) {
+                    return;
                 }
 
-                return <View></View>
-            }}
-            keyExtractor={device => device.id}
-        />
-    </View>
-  );
+                const rawValue = parseInt(atob(char?.value ?? ""));
+                setStepCount(rawValue);
+            }
+        )
+        return () => sub.remove()
+    }, [device])
+
+
+    const searchAndConnectToDevice = () =>
+        bleManager.startDeviceScan(null, null, (error, device) => {
+            if (error) {
+                console.error(error);
+                setIsConnected(false);
+                setConnectionStatus("Error searching for devices");
+                return;
+            }
+            if (device?.name === DEVICE_NAME) {
+                bleManager.stopDeviceScan();
+                setConnectionStatus("Connecting...");
+                connectToDevice(device);
+            }
+        });
+
+    const connectToDevice = async (device: Device) => {
+        try {
+            const _device = await device.connect();
+            // require to make all services and Characteristics accessable
+            await _device.discoverAllServicesAndCharacteristics();
+            setConnectionStatus("Connected");
+            setIsConnected(true);
+            setDevice(_device);
+        } catch (error) {
+            setConnectionStatus("Error in Connection");
+            setIsConnected(false);
+        }
+    };
+
+    return (
+        <View>
+            <View style={{ marginBottom: 50 }}>
+                <View>
+                    <Text>The connection status is: {connectionStatus}</Text>
+                    <Text>{device?.name}</Text>
+                    <Button
+                        disabled={!isConnected}
+                        onPress={() => { }}
+                        title={`The button is ${isConnected ? "enabled" : "disabled"}`}
+                    />
+                </View>
+            </View>
+        </View>
+    );
 }
 
 const style = StyleSheet.create({

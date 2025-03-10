@@ -25,12 +25,6 @@ export default function Profile() {
         showsVerticalScrollIndicator={false}
       >
         <View style={style.components}>
-            <CarouselComponent 
-              count={data.length}
-              data={data}
-            />
-        </View>
-        <View style={style.components}>
             <BluetoothComponent />
         </View>
         <View style={style.end}></View>
