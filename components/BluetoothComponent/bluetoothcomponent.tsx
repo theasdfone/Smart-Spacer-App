@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BleManager, Device } from "react-native-ble-plx";
+import { useAndroidPermissions } from "./useAndroidPermissions";
 
 const bleManager = new BleManager();
+global.Buffer = require('buffer').Buffer;
 
 const DEVICE_NAME = "Smart Spacer";
-const SERVICE_UUID = "ab49b033-1163-48db-931c-9c2a3002ee1d";
-const STEPCOUNT_CHARACTERISTIC_UUID = "fbb6411e-26a7-44fb-b7a3-a343e2b011fe";
+const SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E";
+const RX_UUID = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E";
 
 export default function BluetoothComponent() {
     const [connectionStatus, setConnectionStatus] = useState("Searching...");
     const [isConnected, setIsConnected] = useState<boolean>(false);
     const [device, setDevice] = useState<Device | null>(null);
-    const [stepCount, setStepCount] = useState(-1);
+    const [stepCount, setStepCount] = useState("");
+    const [hasPermissions, setHasPermissions] = useState<boolean>(Platform.OS == 'ios');
+    const [waitingPerm, grantedPerm] = useAndroidPermissions();
 
     useEffect(() => {
-        searchAndConnectToDevice();
-    }, []);
+        if (!(Platform.OS == 'ios')) {
+            setHasPermissions(grantedPerm);
+        }
+    }, [grantedPerm])
+
+    useEffect(() => {
+        if (hasPermissions) {
+            searchAndConnectToDevice();
+        }
+    }, [hasPermissions]);
 
     useEffect(() => {
         if (!device) {
@@ -54,24 +66,23 @@ export default function BluetoothComponent() {
 
     useEffect(() => {
         if (!device || !device.isConnected) {
-            return
+            return;
         }
 
-        const sub = device.monitorCharacteristicForService(
-            SERVICE_UUID,
-            STEPCOUNT_CHARACTERISTIC_UUID,
-            (error, char) => {
-                if (error || !char) {
-                    return;
-                }
-
-                const rawValue = parseInt(atob(char?.value ?? ""));
-                setStepCount(rawValue);
+        const sub = device.monitorCharacteristicForService(SERVICE_UUID, RX_UUID, (error, char) => {
+            if (error) {
+                console.error("Error while monitoring characteristic:", error);
             }
-        )
-        return () => sub.remove()
-    }, [device])
 
+            if (char?.value) {
+                const value = Buffer.from(char.value, 'base64').toString('utf-8');
+                setStepCount(value);
+                console.log('Value: ', value);  // Debugging log
+            }
+        });
+
+        return () => sub.remove()
+    }, [device]);
 
     const searchAndConnectToDevice = () =>
         bleManager.startDeviceScan(null, null, (error, device) => {
@@ -103,17 +114,16 @@ export default function BluetoothComponent() {
     };
 
     return (
-        <View>
-            <View style={{ marginBottom: 50 }}>
-                <View>
-                    <Text>The connection status is: {connectionStatus}</Text>
-                    <Text>{device?.name}</Text>
-                    <Button
-                        disabled={!isConnected}
-                        onPress={() => { }}
-                        title={`The button is ${isConnected ? "enabled" : "disabled"}`}
-                    />
-                </View>
+        <View style={style.main}>
+            <View>
+                <Text>The connection status is: {connectionStatus}</Text>
+                <Text>{device?.name}</Text>
+                <Button
+                    disabled={!isConnected}
+                    onPress={() => { }}
+                    title={`The button is ${isConnected ? "enabled" : "disabled"}`}
+                />
+                <Text>{stepCount}</Text>
             </View>
         </View>
     );
@@ -121,15 +131,8 @@ export default function BluetoothComponent() {
 
 const style = StyleSheet.create({
     main: {
-        backgroundColor: "lightblue",
-        marginTop: 20,
-        height: 30,
-        alignItems: "center",
-        borderRadius: 30
-    },
-
-    container: {
-        marginVertical: 10,
-        backgroundColor: "lightgreen"
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 });

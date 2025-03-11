@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bmecapstone.smartspacerapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,11 +24,20 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+    "permissions": [
+      "android.permission.BLUETOOTH",
+      "android.permission.BLUETOOTH_ADMIN",
+      "android.permission.BLUETOOTH_CONNECT"
+    ],
     "plugins": [
       "expo-router",
-      ["react-native-ble-plx",
+      [
+        "react-native-ble-plx",
         {
-          "modes": ["peripheral", "central"]
+          "modes": [
+            "peripheral",
+            "central"
+          ]
         }
       ],
       [
