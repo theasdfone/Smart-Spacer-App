@@ -1,4 +1,4 @@
-import BluetoothComponent from "@/components/BluetoothComponent/bluetoothcomponent";
+import BluetoothComponent from "@/components/IndexComponents/IndexBluetoothComponent/bluetoothcomponent";
 import CarouselComponent from "@/components/util/carousel/carousel";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -24,9 +24,6 @@ export default function Profile() {
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        <View style={style.components}>
-            <BluetoothComponent />
-        </View>
         <View style={style.end}></View>
       </ScrollView>
     </SafeAreaView>

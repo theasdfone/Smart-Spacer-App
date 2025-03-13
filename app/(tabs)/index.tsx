@@ -5,8 +5,9 @@ import IndexNotification from '@/components/IndexComponents/indexnotifications';
 import IndexTreatmentPlan from '@/components/IndexComponents/indextreatmentplan';
 import IndexContacts from '@/components/IndexComponents/indexcontact';
 import IndexGame from "@/components/IndexComponents/indexgame";
-import IndexSpacer from "@/components/IndexComponents/indexspacer";
+import IndexSpacer from "@/components/IndexComponents/IndexBluetoothComponent/bluetoothwrapper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BluetoothComponent from "@/components/IndexComponents/IndexBluetoothComponent/bluetoothcomponent";
 
 export default function Index() {
  return (
@@ -24,7 +25,7 @@ export default function Index() {
           <IndexGame />
         </View>
         <View style={style.components}>
-          <IndexSpacer />
+          <BluetoothComponent />
         </View>
         <View style={style.components}>
           <IndexTreatmentPlan />
