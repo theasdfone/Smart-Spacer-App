@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { useEffect, useState } from "react";
+import { Text, View, StyleSheet } from "react-native";
 import CalendarStrip from 'react-native-calendar-strip';
 
-import * as ImagePicker from 'expo-image-picker';
 import Profile from "../util/profilepicture";
-import moment, { Moment } from "moment";
 import { placeholder } from "@/placeholder/placeholder";
 import { Journal } from "../models/journal";
+import { journalServices } from "@/services/journalservices";
 
 type Props = {
     setSelectedDate: React.Dispatch<React.SetStateAction<any>>;
@@ -15,9 +14,24 @@ type Props = {
 export default function JournalCalendar({ setSelectedDate }: Props) {
     const [calendarMonth, setCalendarMonth] = useState<string>("");
 
+    const [journals, setJournals] = useState<Journal[]>([]);
+
+    useEffect(() => {
+        const fetchJournalsData = async () => {
+            try {
+                const result = await journalServices.getJournals();
+                setJournals(result);
+            } catch (err) {
+                console.log(err)
+            }
+        };
+
+        fetchJournalsData();
+    }, []);
+
     let markedDatesArray: any = [];
 
-    placeholder.journal.map((item, i) => {
+    journals.map((item, i) => {
         markedDatesArray.push({
             date: item.Date,
             dots: [
@@ -52,6 +66,7 @@ export default function JournalCalendar({ setSelectedDate }: Props) {
                     markedDates={markedDatesArray}
                 />
             </View>
+            <Text>{journals.toString()}</Text>
         </View>
     );
 }

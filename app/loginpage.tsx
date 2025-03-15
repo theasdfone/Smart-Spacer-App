@@ -4,7 +4,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin, SignInResponse, statusCodes } from '@react-native-google-signin/google-signin';
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginPage() {
     const storeLogin = async (value: SignInResponse) => {
@@ -43,7 +42,7 @@ export default function LoginPage() {
     };
 
     const login = async () => {
-        const response = await signIn().then(() => {
+        const response: any = await signIn().then(() => {
             router.replace("/(tabs)")
         }).catch((err) => {
             throw console.error(err)
