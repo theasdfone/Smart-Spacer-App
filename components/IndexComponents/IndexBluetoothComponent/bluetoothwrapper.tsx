@@ -5,7 +5,7 @@ import { placeholder } from "@/placeholder/placeholder";
 import { User } from "../../objects/user";
 
 type Props = {
-  charge: number,
+  charge: string,
   serialNumber: string | undefined,
   status: string
 }
@@ -27,7 +27,7 @@ export default function BluetoothWrapper({ charge, serialNumber, status }: Props
           />
           <View>
             <Text style={style.spacerDetails}>Battery Remaining:</Text>
-            <Text style={style.spacerDetails}>{charge}%</Text>
+            <Text style={style.spacerDetails}>{charge}</Text>
           </View>
         </View>
         <View style={style.imageContainer}>

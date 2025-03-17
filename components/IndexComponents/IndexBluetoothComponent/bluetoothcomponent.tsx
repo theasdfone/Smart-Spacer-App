@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { BleManager, Device } from "react-native-ble-plx";
 import { requestBluetoothPermission } from "./useAndroidPermissions";
 import { BluetoothCommands } from "./bluetoothcommands";
@@ -23,9 +23,9 @@ export default function BluetoothComponent() {
     const grantedPerm = requestBluetoothPermission();
 
     // Variables for Receiving Data from RX Buffer 
-    const [inhalationData, setInhalationData] = useState(''); // Store expiratory data
+    const [inhalationData, setInhalationData] = useState(''); // Store inhalation data
     const [batteryData, setBatteryData] = useState(''); // Store battery data
-    const [isReceiving, setIsReceiving] = useState(false); // Tracks if we are currently receiving data
+    const [exhalationData, setExhalationData] = useState(''); // Store exhalation data
 
     // This checks to see if permissions are enabled and then attempts to connect or reconnect to the Smart Spacer device 
     useEffect(() => {
@@ -62,6 +62,7 @@ export default function BluetoothComponent() {
         }
 
         let currentBuffer = ``; // Buffer to hold concatenated data
+        let isReceiving = false;
 
         const sub = device.monitorCharacteristicForService(SERVICE_UUID, RX_UUID, (error, char) => {
             if (error) {
@@ -72,16 +73,12 @@ export default function BluetoothComponent() {
             if (char?.value) {
                 // Decode the received chunk (base64 to UTF-8 string)
                 const value = Buffer.from(char.value, 'base64').toString('utf-8');
-
-                console.log('Received chunk:', value);  // Debugging log
-
+                // console.log('Received chunk:', value);
                 // If the chunk contains the START keyword, we start receiving data
                 if (value.includes("#")) {
-                    setIsReceiving(true);
+                    isReceiving = true;
                     currentBuffer = ``;  // Clear any previous data
-                    currentBuffer += value;
-
-                    console.log('Start receiving data'); // Debugging log
+                    console.log("Start receiving")
                 }
 
                 // If we are receiving data, concatenate the chunk
@@ -89,39 +86,56 @@ export default function BluetoothComponent() {
                     currentBuffer += value;
 
                     if (value.includes("@")) {
-                        let bufferString = currentBuffer.match(/#.*@/);
+                        let bufferString = currentBuffer.replace(/\s+/g, '').match(/#(.*?)@/);
+                        let result = bufferString ? bufferString[0] : "";
 
                         // Check if the chunk contains the INHALATION keyword, which indicates this json is for inhalation data
-                        if (bufferString?.includes(BluetoothCommands.INHALATION)) {
+                        if (result.includes(BluetoothCommands.INHALATION)) {
                             // Regex tries to find and retrieve the json (aka everything between the brackets: {})
-                            const inhalationData = currentBuffer.match(/{.*}/);
-                            setInhalationData(inhalationData ? inhalationData[0].toString() : ""); // Set the complete message once the END keyword is detected
+                            const inhalationData = result.match(/\[.*?\]/);
+                            let inhalation = inhalationData ? inhalationData[0].toString() : "";
 
-                            console.log('End of message detected:', inhalationData ? inhalationData[0].toString() : ""); // Debugging log
+                            setInhalationData(inhalation);
 
                             // Reset buffer and receiving state
                             currentBuffer = ``;
-                            setIsReceiving(false);
+                            isReceiving = false;
                         }
 
                         // Check if the chunk contains the BATTERY keyword, which indicates this json is for battery data
-                        if (bufferString?.includes(BluetoothCommands.BATTERY)) {
+                        if (result.includes(BluetoothCommands.BATTERY)) {
                             // Regex tries to find and retrieve the json (aka everything between the brackets: {})
-                            const batteryData = currentBuffer.match(/{.*}/);
-                            setBatteryData(batteryData ? batteryData[0].toString() : "");
+                            const batteryData = result.match(/({.*})/);
+                            let battery = batteryData ? JSON.parse(batteryData[0]).batteryPercentage : "";
 
-                            console.log('End of battery data:', batteryData ? batteryData[0].toString() : ""); // Debugging log
+                            setBatteryData(battery);
 
                             // Reset buffer and receiving state
                             currentBuffer = ``;
-                            setIsReceiving(false);
+                            isReceiving = false;
+                        }
+
+                        // Check if the chunk contains the EXHALATION keyword, which indicates this json is for inhalation data
+                        if (result.includes(BluetoothCommands.EXHALATION)) {
+                            // Regex tries to find and retrieve the json (aka everything between the brackets: {})
+                            const exhalationData = result.match(/({.*})/);
+                            let exhalation = exhalationData ? exhalationData[0].toString() : "";
+                            console.log("EXHALATION:", exhalationData);
+                            setExhalationData(exhalation);
+
+                            // Reset buffer and receiving state
+                            currentBuffer = ``;
+                            isReceiving = false;
                         }
                     }
                 }
             }
         });
 
-        return () => sub.remove();
+        return () => {
+            sub.remove();
+            isReceiving = isReceiving;
+        };
     }, [device]);
 
     // This function deals with device disconnection. We clear our connection status and our RX variables and set device to null
@@ -142,6 +156,7 @@ export default function BluetoothComponent() {
 
                 setBatteryData("");
                 setInhalationData("");
+                setExhalationData("");
 
                 setDevice(null);
             }
@@ -186,10 +201,12 @@ export default function BluetoothComponent() {
     return (
         <View>
             <BluetoothWrapper
-                charge={parseInt(batteryData)}
+                charge={batteryData}
                 serialNumber={device?.id}
                 status={connectionStatus}
             />
+            <Text>EXHALATION: {exhalationData}</Text>
+            <Text>INHALATION: {inhalationData.toString()}</Text>
         </View>
     );
 }
