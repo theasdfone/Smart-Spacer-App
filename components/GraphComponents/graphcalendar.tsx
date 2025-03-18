@@ -1,16 +1,29 @@
-import { placeholder } from "@/placeholder/placeholder";
 import { Image } from "expo-image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import CalendarStrip from 'react-native-calendar-strip';
 import { SpacerUse } from "../models/spaceruse";
+import { spacerUseInfoServices } from "@/services/spaceruseinfoservices";
 
 export default function GraphCalendar() {
     // Todo: Write an API which takes the start and end dates and returns a list of data of whether 
     const [start, setStart] = useState<string>("");
     const [end, setEnd] = useState<string>("");
     
-    const [spacerUse, setSpacerUse] = useState<SpacerUse[]>(placeholder.spaceruse);
+    const [spacerUse, setSpacerUse] = useState<SpacerUse[]>([]);
+
+    useEffect(() => {
+        const fetchResourcesData = async () => {
+          try {
+            const result = await spacerUseInfoServices.getSpacerUseInfos();
+            setSpacerUse(result);
+          } catch (err) {
+            console.log(err)
+          }
+        };
+    
+        fetchResourcesData();
+      }, []);
 
     const techniqueSource = (technique?: number) => {
         if(technique == 1) {
@@ -59,11 +72,11 @@ export default function GraphCalendar() {
                     {   
                         // when we fetch the data the backend will guarantee its sorted from start date to end date
                         spacerUse.map((data) => {
-                            let morningTechSource = techniqueSource(data.MorningTechnique);
-                            let eveningTechSource = techniqueSource(data.EveningTechnique);
+                            let morningTechSource = techniqueSource(data.morning_technique);
+                            let eveningTechSource = techniqueSource(data.evening_technique);
 
                             return(
-                                <View key={data.SpacerUseId}>
+                                <View key={data.id}>
                                     <View>
                                         <Image
                                             style={style.icons}
@@ -84,7 +97,7 @@ export default function GraphCalendar() {
                                             />
                                             <View style={style.relieverCount}>
                                                 <Text style={style.relieverTag}>
-                                                    x{data.RelieverCount}
+                                                    x{data.reliever_num}
                                                 </Text>
                                             </View>
                                         </View>

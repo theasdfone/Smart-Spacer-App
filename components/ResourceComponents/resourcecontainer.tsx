@@ -1,7 +1,5 @@
-import { useState } from 'react';
-import { Text, View, StyleSheet, Pressable, Image, Button, Linking } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { Resource } from './objects/resource';
-import { placeholder } from '@/placeholder/placeholder';
 import { Link } from 'expo-router';
 
 type Props = {
@@ -14,9 +12,9 @@ export default function ResourceContainer({resources}: Props) {
         {
             resources.map((resource) => {
                 return(
-                    <View key={resource.ResourceId} style={style.resourceContainer}>
+                    <View key={resource.id} style={style.resourceContainer}>
                         <Link
-                            href={resource.Link}
+                            href={resource.url}
                         >
                             <View>
                                 <Image 
@@ -24,8 +22,8 @@ export default function ResourceContainer({resources}: Props) {
                                     source={require('../../assets/images/resource-pic1.png')}
                                 />
                                 <View style={style.title}>
-                                    <Text>{resource.Title}</Text>
-                                    <Text>{resource.Description}</Text>
+                                    <Text>{resource.title}</Text>
+                                    <Text>{resource.description}</Text>
                                 </View>
                             </View>
                         </Link>

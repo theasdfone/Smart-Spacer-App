@@ -1,19 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from "react-native";
 
 import Profile from '../util/profilepicture';
 import { HealthcareProvider } from '../models/provider';
-import { User } from '../models/user';
+import { Child } from '../models/child';
+
+import * as SecureStore from 'expo-secure-store';
 import { placeholder } from '@/placeholder/placeholder';
 
 export default function IndexHeader() {
   const [provider, setProvider] = useState<HealthcareProvider>(placeholder.provider);
-  const [user, setUser] = useState<User>(placeholder.user);
+  const [child, setChild] = useState<Child>();
 
+  useEffect(() => {
+    const child = SecureStore.getItem("child");
+
+    if (child) {
+      setChild(JSON.parse(child));
+    } else {
+      throw console.error("Child not found");
+    }
+  }, []);
+  
   return (
     <View style={style.welcome}>
       <View style={style.navbar}>
-        <Text style={style.header}>Welcome {user.Username}!</Text>
+        <Text style={style.header}>Welcome {child?.parent_id}!</Text>
         <Profile />
       </View>
 

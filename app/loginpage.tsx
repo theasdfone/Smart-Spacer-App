@@ -2,28 +2,35 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GoogleSignin, SignInResponse, statusCodes } from '@react-native-google-signin/google-signin';
+import * as SecureStore from 'expo-secure-store';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import { childServices } from "@/services/childservices";
 
 export default function LoginPage() {
-    const storeLogin = async (value: SignInResponse) => {
-        try {
-            const jsonValue = JSON.stringify(value);
-            await AsyncStorage.setItem('user', jsonValue);
-        } catch (e) {
-            throw console.error(e);
-
-        }
-    };
-
     const signIn = async () => {
         try {
-            GoogleSignin.configure({});
+            GoogleSignin.configure({
+                webClientId: "70846818855-uvvgafo1soc8r07ohu81q73kiu5muu09.apps.googleusercontent.com",
+            });
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
-            storeLogin(userInfo);
 
-            return userInfo;
+            if (userInfo.data?.idToken) {
+                router.replace("/(tabs)");
+
+                // Create a Google credential with the token
+                const googleCredential = auth.GoogleAuthProvider.credential(userInfo.data.idToken);
+
+                // Sign-in the user with the credential
+                const authUser = await auth().signInWithCredential(googleCredential);
+
+                var token = await authUser.user.getIdToken();
+                var child = await childServices.getChildById("test");
+                SecureStore.setItem("secure_token", token);
+                SecureStore.setItem("child", JSON.stringify(child[0]));
+            }
+
         } catch (error: any) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
                 // user cancelled the login flow
@@ -41,24 +48,6 @@ export default function LoginPage() {
         }
     };
 
-    const login = async () => {
-        const response: any = await signIn().then(() => {
-            router.replace("/(tabs)")
-        }).catch((err) => {
-            throw console.error(err)
-        });
-
-        // const { idToken, user } = response;
-
-        // if (idToken) {
-        //     const resp = await authAPI.validateToken({
-        //         token: idToken,
-        //         email: user.email,
-        //     });
-        //     await handlePostLoginData(resp.data);
-        // }
-    }
-
     return (
         <View style={style.main}>
             <View style={style.container}>
@@ -66,7 +55,7 @@ export default function LoginPage() {
                     <View>
                         <TouchableOpacity
                             style={style.continueButton}
-                            onPress={login}
+                            onPress={signIn}
                         >
                             <View style={style.textContainer}>
                                 <Text style={style.buttonText}>Login</Text>

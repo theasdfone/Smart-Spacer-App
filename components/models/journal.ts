@@ -1,9 +1,9 @@
 export type Journal = {
-    JournalId: number,
-    ChildId: string,
-    Date: Date,
-    Score: number,
-    Description: string,
-    Hospitalizations: number,
-    Allergy: number
+    id: number,
+    child_id: string,
+    date: Date,
+    score: number,
+    description: string,
+    hospitalizations: number,
+    allergy: number
 }

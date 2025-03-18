@@ -1,29 +1,29 @@
-import { Journal } from "@/components/models/journal";
+import { Resource } from "@/components/ResourceComponents/objects/resource";
 import { fetchData } from "./util/api"
 
 import * as SecureStore from 'expo-secure-store';
 
 const token = SecureStore.getItem("secure_token");
 
-export const journalServices = {
-    async getJournals() {
-        const result = await fetchData('journal', {
+export const resourceServices = {
+    async getResources() {
+        const result = await fetchData('resources', {
             method: 'GET',
         }, token);
 
         return result;
     },
 
-    async getJournalsByUserId(childId: String) {
-        const result = await fetchData(`journal/${childId}`, {
+    async getResourceById(id: number) {
+        const result = await fetchData(`resources/${id}`, {
             method: 'GET',
         }, token);
 
         return result;
     },
 
-    async createJournal(entry: Journal) {
-        const result = await fetchData('journal', {
+    async createResource(entry: Resource) {
+        const result = await fetchData('resources', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,8 +33,8 @@ export const journalServices = {
         return result;
     },
 
-    async updateJournal(id: number, entry: Journal) {
-        const result = await fetchData(`journal/${id}`, {
+    async updateResource(id: number, entry: Resource) {
+        const result = await fetchData(`resources/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,8 +44,8 @@ export const journalServices = {
         return result;
     },
 
-    async deleteJournal(id: number) {
-        const result = await fetchData(`journal/${id}`, {
+    async deleteResource(id: number) {
+        const result = await fetchData(`resources/${id}`, {
             method: 'DELETE',
         }, token);
         return result;

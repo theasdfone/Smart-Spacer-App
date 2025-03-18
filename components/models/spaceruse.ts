@@ -1,8 +1,8 @@
 export type SpacerUse = {
-    SpacerUseId: number,
-    ChildId: number,
-    DateTime: Date,
-    MorningTechnique: number,
-    EveningTechnique: number,
-    RelieverCount: number,
+    id: number,
+    child_id: String,
+    date_time: Date,
+    morning_technique: number,
+    evening_technique: number,
+    reliever_num: number,
 }

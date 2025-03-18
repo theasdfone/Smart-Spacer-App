@@ -3,7 +3,6 @@ import { Text, View, StyleSheet } from "react-native";
 import CalendarStrip from 'react-native-calendar-strip';
 
 import Profile from "../util/profilepicture";
-import { placeholder } from "@/placeholder/placeholder";
 import { Journal } from "../models/journal";
 import { journalServices } from "@/services/journalservices";
 
@@ -33,7 +32,7 @@ export default function JournalCalendar({ setSelectedDate }: Props) {
 
     journals.map((item, i) => {
         markedDatesArray.push({
-            date: item.Date,
+            date: item.date,
             dots: [
                 {
                     color: "green",
@@ -66,7 +65,6 @@ export default function JournalCalendar({ setSelectedDate }: Props) {
                     markedDates={markedDatesArray}
                 />
             </View>
-            <Text>{journals.toString()}</Text>
         </View>
     );
 }

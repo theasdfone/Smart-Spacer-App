@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { Text, View, StyleSheet, Pressable, TouchableOpacity, Image } from "react-native";
-import * as ImagePicker from 'expo-image-picker';
 
 import Profile from '../util/profilepicture';
 import Searchbar from '../util/searchbar';
-import { Resource } from './objects/resource';
-import { placeholder } from '@/placeholder/placeholder';
 
 type Props = {
   resultSize: number

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import * as SecureStore from 'expo-secure-store';
 
 export default function Profile() {
   const [image, setImage] = useState<string | undefined>(undefined);
@@ -31,7 +32,7 @@ export default function Profile() {
         await GoogleSignin.signOut();
 
         // Remove user data from AsyncStorage
-        await AsyncStorage.removeItem('user');
+        await SecureStore.deleteItemAsync('secure_token');
 
         // Redirect to login screen
         router.navigate("/loginpage");
