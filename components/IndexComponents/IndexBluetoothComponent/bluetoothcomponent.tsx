@@ -205,8 +205,6 @@ export default function BluetoothComponent() {
                 serialNumber={device?.id}
                 status={connectionStatus}
             />
-            <Text>EXHALATION: {exhalationData}</Text>
-            <Text>INHALATION: {inhalationData.toString()}</Text>
         </View>
     );
 }
