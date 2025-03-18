@@ -3,11 +3,22 @@ import GraphDosageCounter from "@/components/GraphComponents/graphdosagecounter"
 import GraphHeader from "@/components/GraphComponents/graphheader";
 import GraphPeakFlow from "@/components/GraphComponents/graphpeakflow";
 import GraphSchedule from "@/components/GraphComponents/graphschedule";
+import { SpacerUse } from "@/components/models/spaceruse";
+import { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function GraphScreen() {
- return (
+  const [spacerUse, setSpacerUse] = useState<SpacerUse[]>([]);
+
+  const counts = spacerUse.reduce((acc, data) => {
+    data.morning_technique === 2 || data.evening_technique === 2 ? acc.missed++ : acc.onTime++;
+    return acc;
+  }, { onTime: 0, missed: 0 });
+  
+  const { onTime, missed } = counts;
+  
+  return (
     <SafeAreaView style={style.main}>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -16,10 +27,16 @@ export default function GraphScreen() {
           <GraphHeader />
         </View>
         <View style={style.calendar}>
-          <GraphCalendar />
+          <GraphCalendar 
+            spacerUse={spacerUse}
+            setSpacerUse={setSpacerUse}
+          />
         </View>
         <View style={style.components}>
-          <GraphSchedule />
+          <GraphSchedule
+            onTime={onTime}
+            missed={missed}
+          />
         </View>
         <View style={style.components}>
           <GraphPeakFlow />
@@ -34,26 +51,26 @@ export default function GraphScreen() {
 }
 
 const style = StyleSheet.create({
-    main: {
-        flex: 1,
-        backgroundColor: "white",
-    },
+  main: {
+    flex: 1,
+    backgroundColor: "white",
+  },
 
-    header: {
-      marginTop: 40,
-    },
+  header: {
+    marginTop: 40,
+  },
 
-    calendar: {
-      marginTop: 20,
-      paddingHorizontal: 20
-    },
+  calendar: {
+    marginTop: 20,
+    paddingHorizontal: 20
+  },
 
-    components: {
-      marginTop: 30,
-      paddingHorizontal: 20
-    },
-    
-    end: {
-      marginTop: 15
-    }
+  components: {
+    marginTop: 30,
+    paddingHorizontal: 20
+  },
+
+  end: {
+    marginTop: 15
+  }
 });
