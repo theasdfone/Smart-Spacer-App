@@ -2,6 +2,10 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from 'expo-image';
 import ProgressCircle from 'react-native-progress/Circle';
 import { Child } from "../models/child";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import { journalServices } from "@/services/journalservices";
+import { Journal } from "../models/journal";
 
 type Props = {
   selectedDate: string,
@@ -9,6 +13,34 @@ type Props = {
 }
 
 export default function JournalDailyLog({ selectedDate, child }: Props) {
+  const [journal, setJournal] = useState<Journal>();
+
+  const goToSurvey = () => {
+    // router.setParams(
+    //   {date: journal ? journal.date.toString() : ""}
+    // );
+    
+    router.push("../journalsurvey", { relativeToDirectory: true });
+  }
+
+  useEffect(() => {
+    const fetchJournalData = async (child_id: string) => {
+      try {
+        const result = await journalServices.getJournalsByChildIdAndDate(child_id, selectedDate);
+        setJournal(result);
+      } catch (err) {
+        console.log(err)
+      }
+    };
+
+    if (child) {
+      fetchJournalData(child.id);
+    } else {
+      throw console.error("Child not found");
+    }
+  }, [selectedDate]);
+
+
   return (
     <View style={style.container}>
       <Text style={style.header}>{selectedDate}</Text>
@@ -29,6 +61,7 @@ export default function JournalDailyLog({ selectedDate, child }: Props) {
           <Text>Complete {child?.name}'s daily log</Text>
           <TouchableOpacity
             style={style.continueButton}
+            onPress={goToSurvey}
           >
             <View style={style.textContainer}>
               <Text style={style.buttonText}>Continue</Text>

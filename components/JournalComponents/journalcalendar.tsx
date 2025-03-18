@@ -6,6 +6,8 @@ import Profile from "../util/profilepicture";
 import { Journal } from "../models/journal";
 import { journalServices } from "@/services/journalservices";
 
+import * as SecureStore from 'expo-secure-store';
+
 type Props = {
     setSelectedDate: React.Dispatch<React.SetStateAction<any>>;
 }
@@ -16,16 +18,21 @@ export default function JournalCalendar({ setSelectedDate }: Props) {
     const [journals, setJournals] = useState<Journal[]>([]);
 
     useEffect(() => {
-        const fetchJournalsData = async () => {
+        const child = SecureStore.getItem("child");
+        const fetchJournalsData = async (child_id: string) => {
             try {
-                const result = await journalServices.getJournals();
+                const result = await journalServices.getJournalsByChildId(child_id);
                 setJournals(result);
             } catch (err) {
                 console.log(err)
             }
         };
 
-        fetchJournalsData();
+        if (child) {
+            fetchJournalsData(JSON.parse(child).id);
+        } else {
+            throw console.error("Child not found");
+        }        
     }, []);
 
     let markedDatesArray: any = [];

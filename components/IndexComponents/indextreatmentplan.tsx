@@ -1,45 +1,69 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Modal, Image, Pressable, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import ProgressBar from 'react-native-progress/Bar';
 
-import { Inhaler } from '../models/inhaler';
-import { placeholder } from "@/placeholder/placeholder";
+import * as SecureStore from 'expo-secure-store';
+import { spacerServices } from "@/services/spacerservices";
+import { SpacerMedication } from "../models/spacermedications";
 
 export default function IndexTreatment() {
-  const [inhalers, setInhalers] = useState<Inhaler[]>(placeholder.inhaler);
+  const [spacerMedications, setSpacerMedications] = useState<SpacerMedication[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
 
- return (
-      <View>
-        <View style={style.main}>
-          <View style= {style.treatmentplan}>
-            <View style={style.iconBackground}>
-              <Image
-                style={style.medIcon}
-                source={require('../../assets/images/hospital-icon.png')}
-              />
-            </View>
-            <Text style={style.title}>Your Treatment Plan</Text>
+  useEffect(() => {
+    const child = SecureStore.getItem("child");
+    const fetchSpacersData = async (child_id: string) => {
+      try {
+        const result = await spacerServices.getSpacerMedicationByChildId(child_id);
+        setSpacerMedications(result);
+      } catch (err) {
+        console.log(err)
+      }
+    };
+
+    if (child) {
+      fetchSpacersData(JSON.parse(child).id);
+    } else {
+      throw console.error("Child not found");
+    }
+  }, []);
+
+  return (
+    <View>
+      <View style={style.main}>
+        <View style={style.treatmentplan}>
+          <View style={style.iconBackground}>
+            <Image
+              style={style.medIcon}
+              source={require('../../assets/images/hospital-icon.png')}
+            />
           </View>
-          <View>
-            {
-              inhalers.slice(0,2).map((inhaler) => {
-                return(
-                  <View key={inhaler.InhalerId} style={style.inhalerContainer}>
-                    <Image 
+          <Text style={style.title}>Your Treatment Plan</Text>
+        </View>
+        <View style={style.spacerContainer}>
+          {
+            spacerMedications ?
+              spacerMedications.slice(0, 2).map((spacerMedication) => {
+                console.log(spacerMedication)
+                return (
+                  <View style={style.inhalerContainer}>
+                    <Image
                       style={style.inhalerIcon}
                       source={require('../../assets/images/asthma-inhaler.png')}
                     />
                     <View style={style.inhalerDescriptions}>
-                      <Text style={style.inhalerText}>{inhaler.Title}</Text>
-                      <ProgressBar progress={inhaler.AmountLeft} width={220} height={4} color={inhaler.InhalerType == 1 ? 'orange' : 'blue'} borderWidth={2} />
+                      <Text style={style.inhalerText}>{spacerMedication.commercial_name}</Text>
+                      <ProgressBar progress={spacerMedication.doses_left/100} width={220} height={4} color={spacerMedication.colour} borderWidth={2} />
                     </View>
                   </View>
                 )
               })
-            }
-          </View>
+              :
+              <View style={style.emptyTextContainer}>
+                <Text style={style.emptyText}>No Data</Text>
+              </View>
+          }
           <View style={style.editContainer}>
             <TouchableOpacity
               onPress={() => setModalVisible(true)}
@@ -48,30 +72,31 @@ export default function IndexTreatment() {
             </TouchableOpacity>
           </View>
         </View>
-        <SafeAreaProvider>
-          <SafeAreaView style={style.centeredView}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <View style={style.centeredView}>
-                <View style={style.modalView}>
-                  <Text>ABC</Text>
-                  <Pressable
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text>Close</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </Modal>
-          </SafeAreaView>
-        </SafeAreaProvider>
       </View>
+      <SafeAreaProvider>
+        <SafeAreaView style={style.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={style.centeredView}>
+              <View style={style.modalView}>
+                <Text>ABC</Text>
+                <Pressable
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text>Close</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </View>
   );
 }
 
@@ -89,6 +114,19 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
 
+  spacerContainer: {
+    height: 150,
+  },
+
+  emptyTextContainer: {
+    alignItems: "center",
+    marginTop: 30
+  },
+
+  emptyText: {
+    fontSize: 50
+  },
+
   inhalerContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -104,7 +142,7 @@ const style = StyleSheet.create({
     paddingRight: 20,
     paddingBottom: 3
   },
-  
+
   medIcon: {
     height: 30,
     width: 30,
@@ -131,7 +169,7 @@ const style = StyleSheet.create({
   },
 
   editContainer: {
-    alignItems:"flex-end",
+    alignItems: "flex-end",
     paddingRight: 10,
     paddingTop: 20
   },
@@ -164,7 +202,7 @@ const style = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    
+
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,

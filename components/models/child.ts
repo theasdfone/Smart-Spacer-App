@@ -1,5 +1,5 @@
 export type Child = {
-    id: number,
+    id: string,
     name: string,
     date_of_birth: Date,
     status: string,

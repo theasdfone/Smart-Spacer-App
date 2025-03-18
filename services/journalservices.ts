@@ -14,8 +14,16 @@ export const journalServices = {
         return result;
     },
 
-    async getJournalsByUserId(childId: String) {
+    async getJournalsByChildId(childId: string) {
         const result = await fetchData(`journal/${childId}`, {
+            method: 'GET',
+        }, token);
+
+        return result;
+    },
+
+    async getJournalsByChildIdAndDate(childId: string, selectedDate: string) {
+        const result = await fetchData(`journal/${childId}?date=${selectedDate}`, {
             method: 'GET',
         }, token);
 

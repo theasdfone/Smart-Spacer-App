@@ -98,7 +98,7 @@ function checkNotificationLength(notifications: Notif[], setModalVisible: Dispat
       {
         notifications.slice(0, 3).map((notif) => {
           return (
-            <View key={notif.NotifId} style={style.notification}>
+            <View style={style.notification}>
               <View style={style.iconBackground}>
                 <Image
                   style={style.bellIcon}

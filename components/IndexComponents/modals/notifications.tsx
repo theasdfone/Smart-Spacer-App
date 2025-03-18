@@ -14,7 +14,7 @@ export default function Notifications({notifications} : Props) {
         {
           notifications.map((notif) => {
             return(
-              <View key={notif.NotifId} style= {style.notification}>
+              <View style= {style.notification}>
                 <View style={style.iconBackground}>
                   <Image 
                     style={style.bellIcon}

@@ -18,7 +18,7 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />
         }}/>
-        <Tabs.Screen name="journal" 
+        <Tabs.Screen name="(journal)" 
         options={{
           title: 'Journal',
           headerShown: false,

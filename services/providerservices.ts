@@ -1,29 +1,29 @@
-import { SpacerUse } from "@/components/models/spaceruse";
+import { HealthcareProvider } from "@/components/models/provider";
 import { fetchData } from "./util/api"
 
 import * as SecureStore from 'expo-secure-store';
 
 const token = SecureStore.getItem("secure_token");
 
-export const spacerUseInfoServices = {
-    async getSpacerUseInfoByDate(child_id: string, start: string, end: string) {
-        const result = await fetchData(`spacer_use_info/${child_id}?start=${start}&end=${end}`, {
-            method: 'GET',
-        }, token);
-        console.log(result);
-        return result;
-    },
-
-    async getSpacerUseInfoByChildId(child_id: string) {
-        const result = await fetchData(`spacer_use_info/${child_id}`, {
+export const providerServices = {
+    async getProviders() {
+        const result = await fetchData('rt', {
             method: 'GET',
         }, token);
 
         return result;
     },
 
-    async createSpacerUseInfo(entry: SpacerUse) {
-        const result = await fetchData('spacer_use_info', {
+    async getProviderById(id: String) {
+        const result = await fetchData(`rt/${id}`, {
+            method: 'GET',
+        }, token);
+
+        return result;
+    },
+
+    async createProvider(entry: HealthcareProvider) {
+        const result = await fetchData('rt', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,8 +33,8 @@ export const spacerUseInfoServices = {
         return result;
     },
 
-    async updateSpacerUseInfo(id: number, entry: SpacerUse) {
-        const result = await fetchData(`spacer_use_info/${id}`, {
+    async updateProvider(id: number, entry: HealthcareProvider) {
+        const result = await fetchData(`rt/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,8 +44,8 @@ export const spacerUseInfoServices = {
         return result;
     },
 
-    async deleteSpacerUseInfo(id: number) {
-        const result = await fetchData(`spacer_use_info/${id}`, {
+    async deleteProvider(id: number) {
+        const result = await fetchData(`rt/${id}`, {
             method: 'DELETE',
         }, token);
         return result;

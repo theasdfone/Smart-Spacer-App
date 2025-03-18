@@ -6,17 +6,30 @@ import { HealthcareProvider } from '../models/provider';
 import { Child } from '../models/child';
 
 import * as SecureStore from 'expo-secure-store';
-import { placeholder } from '@/placeholder/placeholder';
+import { providerServices } from '@/services/providerservices';
 
 export default function IndexHeader() {
-  const [provider, setProvider] = useState<HealthcareProvider>(placeholder.provider);
+  const [provider, setProvider] = useState<HealthcareProvider>();
   const [child, setChild] = useState<Child>();
 
   useEffect(() => {
     const child = SecureStore.getItem("child");
 
+    const fetchProviderData = async (provider_id: string) => {
+      try {
+        const result = await providerServices.getProviderById(provider_id);
+        setProvider(result);
+      } catch (err) {
+        console.log(err)
+      }
+    };
+
     if (child) {
-      setChild(JSON.parse(child));
+      let childObj = JSON.parse(child);
+      setChild(childObj);
+      
+      let provider_id = childObj.provider_id;
+      fetchProviderData(provider_id);
     } else {
       throw console.error("Child not found");
     }
@@ -29,7 +42,7 @@ export default function IndexHeader() {
         <Profile />
       </View>
 
-      <Text>Your next appointment with {provider.Name} is MM/DD/YYYY at HH:MM</Text>
+      <Text>Your next appointment with {provider?.name} is MM/DD/YYYY at HH:MM</Text>
     </View>
   );
 }

@@ -1,7 +1,8 @@
 export type HealthcareProvider = {
-    ProviderId: number,
-    Name: string,
-    Email: string,
-    RegularPhone: string,
-    EmergencyNumber: string
+    id: string,
+    name: string,
+    country: string,
+    email: string,
+    regular_phone: string,
+    emergency_phone: string
 }

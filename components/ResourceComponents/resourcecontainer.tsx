@@ -12,7 +12,7 @@ export default function ResourceContainer({resources}: Props) {
         {
             resources.map((resource) => {
                 return(
-                    <View key={resource.id} style={style.resourceContainer}>
+                    <View style={style.resourceContainer}>
                         <Link
                             href={resource.url}
                         >
