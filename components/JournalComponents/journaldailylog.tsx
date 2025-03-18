@@ -3,9 +3,6 @@ import { Image } from 'expo-image';
 import ProgressCircle from 'react-native-progress/Circle';
 import { Child } from "../models/child";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
-import { journalServices } from "@/services/journalservices";
-import { Journal } from "../models/journal";
 
 type Props = {
   selectedDate: string,
@@ -13,33 +10,9 @@ type Props = {
 }
 
 export default function JournalDailyLog({ selectedDate, child }: Props) {
-  const [journal, setJournal] = useState<Journal>();
-
   const goToSurvey = () => {
-    // router.setParams(
-    //   {date: journal ? journal.date.toString() : ""}
-    // );
-    
-    router.push("../journalsurvey", { relativeToDirectory: true });
+    router.push({pathname:"/journalsurvey", params: {date: selectedDate ? selectedDate.toString() : ""}});
   }
-
-  useEffect(() => {
-    const fetchJournalData = async (child_id: string) => {
-      try {
-        const result = await journalServices.getJournalsByChildIdAndDate(child_id, selectedDate);
-        setJournal(result);
-      } catch (err) {
-        console.log(err)
-      }
-    };
-
-    if (child) {
-      fetchJournalData(child.id);
-    } else {
-      throw console.error("Child not found");
-    }
-  }, [selectedDate]);
-
 
   return (
     <View style={style.container}>
