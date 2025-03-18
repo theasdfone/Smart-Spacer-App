@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Pressable, ScrollView, Image, Modal } from "react-native";
-import { Notif } from "../../objects/notification";
+import { Notif } from "../../models/notification";
 
 type Props = {
   notifications: Notif[],
@@ -14,7 +14,7 @@ export default function Notifications({notifications} : Props) {
         {
           notifications.map((notif) => {
             return(
-              <View key={notif.NotifId} style= {style.notification}>
+              <View style= {style.notification}>
                 <View style={style.iconBackground}>
                   <Image 
                     style={style.bellIcon}

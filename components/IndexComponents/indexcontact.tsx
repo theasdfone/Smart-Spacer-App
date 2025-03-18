@@ -1,60 +1,63 @@
-import { Text, View, StyleSheet, Pressable, Image } from "react-native";
-import { useState } from "react";
-import * as ImagePicker from 'expo-image-picker';
+import { Text, View, StyleSheet, Image } from "react-native";
+import { useEffect, useState } from "react";
 
 import Profile from '../util/profilepicture';
-import { HealthcareProvider } from "../objects/provider";
-import { placeholder } from "@/placeholder/placeholder";
+import { HealthcareProvider } from "../models/provider";
+
+import * as SecureStore from 'expo-secure-store';
+import { providerServices } from "@/services/providerservices";
 
 export default function IndexContacts() {
-  const [image, setImage] = useState<string | undefined>(undefined);
-  const [provider, setProvider] = useState<HealthcareProvider>(placeholder.provider);
+  const [provider, setProvider] = useState<HealthcareProvider>();
 
-  const defaultImg = require('@/assets/images/icon.png');
+  useEffect(() => {
+    const child = SecureStore.getItem("child");
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      quality: 1,
-    });
+    const fetchProviderData = async (provider_id: string) => {
+      try {
+        const result = await providerServices.getProviderById(provider_id);
+        setProvider(result);
+      } catch (err) {
+        console.log(err)
+      }
+    };
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+    if (child) {
+      let provider_id = JSON.parse(child).provider_id;
+      fetchProviderData(provider_id)
+    } else {
+      throw console.error("Child not found");
     }
-  };
+  }, []);
 
- return (
-      <View style={style.main}>
-        <View style={style.contactMain}>
-          <View style={style.titleContainer}>
-            <Pressable style={style.profile} onPress={pickImage}>
-              <Profile imgSource={defaultImg} selectedImage={image} />
-            </Pressable>
-            <Text style={style.title}>{provider.Name}</Text>
-          </View>
-          <View style={style.imageContainer}>
-            <Image
-              style={style.icons}
-              source={require('../../assets/images/email.png')}
-            />
-            <Text style={style.contactInfo}>{provider.Email}</Text>
-          </View>
-          <View style={style.imageContainer}>
-            <Image
-              style={style.icons}
-              source={require('../../assets/images/phone.png')}
-            />
-            <Text style={style.contactInfo}>{provider.RegularPhone}</Text>
-          </View>
+  return (
+    <View style={style.main}>
+      <View style={style.contactMain}>
+        <View style={style.titleContainer}>
+          <Profile />
+          <Text style={style.title}>{provider?.name}</Text>
         </View>
-        <View style={style.emergencyMain}>
-          <Text>Emergency</Text>
-          <Text>{provider.EmergencyNumber}</Text>
-          <Text>911</Text>
+        <View style={style.imageContainer}>
+          <Image
+            style={style.icons}
+            source={require('../../assets/images/email.png')}
+          />
+          <Text style={style.contactInfo}>{provider?.email}</Text>
+        </View>
+        <View style={style.imageContainer}>
+          <Image
+            style={style.icons}
+            source={require('../../assets/images/phone.png')}
+          />
+          <Text style={style.contactInfo}>{provider?.regular_phone}</Text>
         </View>
       </View>
+      <View style={style.emergencyMain}>
+        <Text>Emergency</Text>
+        <Text>{provider?.emergency_phone}</Text>
+        <Text>911</Text>
+      </View>
+    </View>
   );
 }
 
@@ -82,15 +85,9 @@ const style = StyleSheet.create({
     width: "30%"
   },
 
-  profile: {
-    height: 40,
-    width: 40,
-    borderRadius: 40,
-  },
-
   titleContainer: {
-    flexDirection:"row",
-    alignItems:"center"
+    flexDirection: "row",
+    alignItems: "center"
   },
 
   title: {

@@ -17,7 +17,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.bmecapstone.smartspacerapp"
+      "package": "com.bmecapstone.smartspacerapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,9 @@
     ],
     "plugins": [
       "expo-router",
+      "@react-native-google-signin/google-signin",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
       [
         "react-native-ble-plx",
         {
@@ -54,7 +58,8 @@
         {
           "cameraPermission": "Allow smart spacer app to access your camera"
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

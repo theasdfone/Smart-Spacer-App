@@ -1,28 +1,43 @@
-import { useState } from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
-import { User } from "../objects/user";
-import { placeholder } from "@/placeholder/placeholder";
+import { useEffect, useState } from "react";
+import { Text, View, StyleSheet } from "react-native";
+import { Child } from "../models/child";
+import * as SecureStore from 'expo-secure-store';
 
-export default function GraphSchedule() {
-    const [user, setUser] = useState<User>(placeholder.user);
+type Props = {
+    onTime: number,
+    missed: number
+}
+
+export default function GraphSchedule({onTime, missed}: Props) {
+    const [child, setChild] = useState<Child>();
+
+    useEffect(() => {
+        const child = SecureStore.getItem("child");
+
+        if(child) {
+            setChild(JSON.parse(child));
+        } else {
+            throw console.error("Child not found");
+        }
+    }, []);
 
     return (
-       <View style={style.main}>
+        <View style={style.main}>
             <View style={style.container}>
                 <Text style={style.header}>Puff Schedule</Text>
-                <Text>In the past 7 days {user.Username} has taken their medication:</Text>
+                <Text>In the past 7 days {child?.name} has taken their medication:</Text>
             </View>
             <View style={style.infoWrapper}>
                 <View style={style.onTimeDose}>
-                    <Text style={style.infoTextTitle}>4/7</Text>
+                    <Text style={style.infoTextTitle}>{onTime}/7</Text>
                     <Text style={style.infoText}>On Time</Text>
                 </View>
                 <View style={style.missedDose}>
-                    <Text style={style.infoTextTitle}>1/7</Text>
+                    <Text style={style.infoTextTitle}>{missed}/7</Text>
                     <Text style={style.infoText}>Missed</Text>
                 </View>
             </View>
-       </View>
+        </View>
     );
 }
 
@@ -56,7 +71,7 @@ const style = StyleSheet.create({
     },
 
     missedDose: {
-        position:"absolute",
+        position: "absolute",
         marginLeft: 80,
         marginTop: 25,
         width: 80,
@@ -69,7 +84,7 @@ const style = StyleSheet.create({
 
     infoTextTitle: {
         fontSize: 20,
-        fontWeight:"bold",
+        fontWeight: "bold",
         color: "white"
     },
 

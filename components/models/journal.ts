@@ -1,0 +1,15 @@
+export type Journal = {
+    id: number,
+    child_id: string,
+    date: Date,
+    score: number,
+    description: string,
+    hospitalizations: number,
+    allergy: number,
+    q1: number,
+    q2: number,
+    q3: number,
+    q4: number,
+    q5: number,
+    comments: string,
+}

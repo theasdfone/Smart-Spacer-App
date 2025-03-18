@@ -1,8 +1,8 @@
 import { Text, View, StyleSheet, Image } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { placeholder } from "@/placeholder/placeholder";
-import { User } from "../../objects/user";
+import { Child } from "@/components/models/child";
+import * as SecureStore from 'expo-secure-store';
 
 type Props = {
   charge: string,
@@ -11,13 +11,23 @@ type Props = {
 }
 
 export default function BluetoothWrapper({ charge, serialNumber, status }: Props) {
-  const [user, setUser] = useState<User>(placeholder.user);
+  const [child, setChild] = useState<Child>();
+
+  useEffect(() => {
+    const child = SecureStore.getItem("child");
+
+    if (child) {
+      setChild(JSON.parse(child));
+    } else {
+      throw console.error("Child not found");
+    }
+  }, []);
 
   return (
     <View style={style.main}>
       <View style={style.spacerMain}>
         <View style={style.titleContainer}>
-          <Text style={style.title}>{user.Username}'s Spacer</Text>
+          <Text style={style.title}>{child?.name}'s Spacer</Text>
           {/* Is this the serial number for the inhaler or the spacer? */}
           <Text>{serialNumber}</Text>
         </View>
