@@ -17,17 +17,17 @@ export default function LoginPage() {
             const userInfo = await GoogleSignin.signIn();
 
             if (userInfo.data?.idToken) {
-                router.replace("/(tabs)");
-
                 // Create a Google credential with the token
                 const googleCredential = auth.GoogleAuthProvider.credential(userInfo.data.idToken);
 
                 // Sign-in the user with the credential
                 const authUser = await auth().signInWithCredential(googleCredential);
 
-                var token = await authUser.user.getIdToken();
+                await authUser.user.getIdToken().then((token) => {
+                    SecureStore.setItem("secure_token", token);
+                    router.replace("/(tabs)");
+                });
                 var child = await childServices.getChildById("test");
-                SecureStore.setItem("secure_token", token);
                 SecureStore.setItem("child", JSON.stringify(child[0]));
             }
 

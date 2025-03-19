@@ -9,6 +9,8 @@ import {
   Text,
 } from "react-native";
 
+import Carousel from "../../util/carousel/carousel"
+
 const FullScreenImageModal = ({
   visible,
   onClose,
@@ -29,7 +31,6 @@ const FullScreenImageModal = ({
           style={styles.backgroundImage}
           resizeMode="cover"
         />
-        <Text style={styles.modalText}>This is {color} screen!</Text>
         <View style={{ top: 60 }}>
           <Image
             source={selectedImage || image}
@@ -39,25 +40,14 @@ const FullScreenImageModal = ({
         </View>
 
         {/* Carousel Image Buttons */}
-
-        {/* <View style={styles.carouselContainer}>
-          {carouselImages.map((carouselImage, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => onSelectImage(carouselImage)} // Update the main image
-              style={[
-                styles.carouselImageContainer,
-                image === carouselImage.image && styles.selectedImageContainer, // Highlight selected image
-              ]}
-            >
-              <Image
-                source={carouselImage}
-                style={styles.carouselImage}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          ))}
-        </View> */}
+        {/* Carousel Component */}
+        <View style={styles.carouselContainer}>
+          <Carousel
+             images={carouselImages} // Pass the carousel images
+             onSelectImage={onSelectImage} // Pass the onSelectImage callback
+             selectedImage={selectedImage} // Pass the currently selected image
+          />
+        </View>
 
         {/* Close Button */}
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
