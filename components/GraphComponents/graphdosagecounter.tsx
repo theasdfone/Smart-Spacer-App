@@ -1,56 +1,65 @@
+import { useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import ProgressCircle from 'react-native-progress/Circle';
+import { SpacerMedication } from "../models/spacermedications";
+import { spacerServices } from "@/services/spacerservices";
+import * as SecureStore from 'expo-secure-store';
 
 export default function GraphDosageCounter() {
+    const [spacerMedications, setSpacerMedications] = useState<SpacerMedication[]>([]);
+
+    useEffect(() => {
+        const child = SecureStore.getItem("child");
+        const fetchSpacersData = async (child_id: string) => {
+            try {
+                const result = await spacerServices.getSpacerMedicationByChildId(child_id);
+                setSpacerMedications(result);
+            } catch (err) {
+                console.log(err)
+            }
+        };
+
+        if (child) {
+            fetchSpacersData(JSON.parse(child).id);
+        } else {
+            throw console.error("Child not found");
+        }
+    }, []);
 
     return (
-       <View>
+        <View>
             <View style={style.container}>
                 <Text style={style.header}>Dosage Counter</Text>
                 <Text>Important! Only counts doses taken with the spacer.</Text>
                 <Text>Doses without it won't be tracked!</Text>
             </View>
             <View style={style.doseContainers}>
-                <View style={style.rescueContainer}>
-                  <View style={style.progressCircleTextContainer}>
-                      <ProgressCircle 
-                        progress={0.5}
-                        color={"#2B1700"}
-                        size={150}
-                        thickness={12}
-                        unfilledColor={"#979797"}
-                        strokeCap={"round"}
-                      />
-                      <View style={style.moveContainerInsideCircle}>
-                        <View style={style.doseTextContainer}>
-                            <Text style={style.doseHeader}>Ventolin</Text>
-                            <Text>80-100 Puffs</Text>
-                            <Text>Left</Text>
+                {
+                    spacerMedications.map((spacerMedication) =>
+
+                        <View style={spacerMedication.colour == "blue" ? style.rescueContainer : style.maintainerContainer}>
+                            <View style={style.progressCircleTextContainer}>
+                                <ProgressCircle
+                                    progress={spacerMedication.doses_left / 100}
+                                    color={"#2B1700"}
+                                    size={150}
+                                    thickness={12}
+                                    unfilledColor={"#979797"}
+                                    strokeCap={"round"}
+                                />
+                                <View style={style.moveContainerInsideCircle}>
+                                    <View style={style.doseTextContainer}>
+                                        <Text style={style.doseHeader}>{spacerMedication.commercial_name}</Text>
+                                        <Text>~{spacerMedication.doses_left} Puffs</Text>
+                                        <Text>Left</Text>
+                                    </View>
+                                </View>
+                            </View>
                         </View>
-                      </View>
-                  </View>
-                </View>
-                <View style={style.maintainerContainer}>
-                  <View style={style.progressCircleTextContainer}>
-                    <ProgressCircle 
-                      progress={0.5}
-                      color={"#2B1700"}
-                      size={150}
-                      thickness={12}
-                      unfilledColor={"#979797"}
-                      strokeCap={"round"}
-                    />
-                    <View style={style.moveContainerInsideCircle}>
-                        <View style={style.doseTextContainer}>
-                            <Text style={style.doseHeader}>Fluticasone</Text>
-                            <Text>80-100 Puffs</Text>
-                            <Text>Left</Text>
-                        </View>
-                    </View>
-                  </View>
-                </View>
+                    )
+                }
             </View>
-       </View>
+        </View>
     );
 }
 
@@ -80,7 +89,7 @@ const style = StyleSheet.create({
     },
 
     missedDose: {
-        position:"absolute",
+        position: "absolute",
         marginLeft: 80,
         marginTop: 25,
         width: 80,
@@ -93,7 +102,7 @@ const style = StyleSheet.create({
 
     infoTextTitle: {
         fontSize: 20,
-        fontWeight:"bold",
+        fontWeight: "bold",
         color: "white"
     },
 
@@ -138,7 +147,7 @@ const style = StyleSheet.create({
     },
 
     doseTextContainer: {
-        alignItems:"center",
+        alignItems: "center",
     },
 
     doseHeader: {

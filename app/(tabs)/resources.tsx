@@ -26,7 +26,7 @@ export default function resourceScreen() {
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        <View style={style.components}>
+        <View style={style.header}>
           <ResourceHeader
             resultSize={resources.length}
           />
@@ -45,10 +45,14 @@ const style = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: "white",
-    paddingHorizontal: 20,
+  },
+
+  header: {
+    marginTop: 40,
   },
 
   components: {
-    marginTop: 20
+    marginTop: 20,
+    paddingHorizontal: 20,
   },
 });

@@ -5,8 +5,9 @@ import IndexNotification from '@/components/IndexComponents/indexnotifications';
 import IndexTreatmentPlan from '@/components/IndexComponents/indextreatmentplan';
 import IndexContacts from '@/components/IndexComponents/indexcontact';
 import IndexGame from "@/components/IndexComponents/indexgame";
-import IndexSpacer from "@/components/IndexComponents/indexspacer";
+import IndexSpacer from "@/components/IndexComponents/IndexBluetoothComponent/bluetoothwrapper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BluetoothComponent from "@/components/IndexComponents/IndexBluetoothComponent/bluetoothcomponent";
 
 export default function Index() {
  return (
@@ -14,7 +15,7 @@ export default function Index() {
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        <View style={style.components}>
+        <View style={style.header}>
           <IndexHeader/>
         </View>
         <View style={style.components}>
@@ -24,7 +25,7 @@ export default function Index() {
           <IndexGame />
         </View>
         <View style={style.components}>
-          <IndexSpacer />
+          <BluetoothComponent />
         </View>
         <View style={style.components}>
           <IndexTreatmentPlan />
@@ -42,11 +43,15 @@ const style = StyleSheet.create({
     main: {
         flex: 1,
         backgroundColor: "white",
-        paddingHorizontal: 20,
+    },
+
+    header: {
+      marginTop: 40
     },
 
     components: {
-      marginTop: 40
+      marginTop: 40,
+      paddingHorizontal: 20,
     },
 
     end: {

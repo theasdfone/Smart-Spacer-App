@@ -12,16 +12,24 @@ export default function ResourceHeader({ resultSize }: Props) {
   const [search, setSearch] = useState("");
 
   return (
-    <View style={style.welcome}>
-      <View style={style.imgheader}>
-        <Text style={style.header}>Resources</Text>
-        <Profile />
-      </View>
-      <View style={style.searchbar}>
-        <Searchbar
-          searchPhrase={search}
-          setSearchPhrase={setSearch}
-        />
+    <View>
+      <View style={style.shadows}>
+        <View style={style.container}>
+          <View style={style.navbar}>
+            <View style={style.welcome}>
+              <View style={style.imgheader}>
+                <Text style={style.header}>Resources</Text>
+                <Profile />
+              </View>
+              <View style={style.searchbar}>
+                <Searchbar
+                  searchPhrase={search}
+                  setSearchPhrase={setSearch}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
       <View style={style.results}>
         <Text>Results {resultSize}</Text>
@@ -32,7 +40,7 @@ export default function ResourceHeader({ resultSize }: Props) {
           <View style={style.dropdownBackground}>
             <Image
               style={style.dropdown}
-              source={require('../../assets/images/up-chevron.png')}
+              source={require('@/assets/images/filter.png')}
             />
           </View>
         </TouchableOpacity>
@@ -42,6 +50,24 @@ export default function ResourceHeader({ resultSize }: Props) {
 }
 
 const style = StyleSheet.create({
+  shadows: {
+    overflow: "hidden",
+    paddingBottom: 5,
+  },
+
+  container: {
+    backgroundColor: '#fff',
+    elevation: 5,
+  },
+
+  navbar: {
+    flexDirection: 'row',
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    height: 125
+  },
+
   welcome: {
     flex: 1,
   },
@@ -70,6 +96,7 @@ const style = StyleSheet.create({
   results: {
     marginTop: 10,
     marginLeft: 10,
+    paddingLeft: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

@@ -1,17 +1,17 @@
 import { Text, View, StyleSheet, Image } from "react-native";
 import { useEffect, useState } from "react";
 
-import { placeholder } from "@/placeholder/placeholder";
-import { Child } from "../models/child";
-import { Spacer } from "../models/spacer";
-
+import { Child } from "@/components/models/child";
 import * as SecureStore from 'expo-secure-store';
 
-export default function IndexSpacer() {
-  const [child, setChild] = useState<Child>();
-  const [spacer, setSpacer] = useState<Spacer>(placeholder.spacer);
+type Props = {
+  charge: string,
+  serialNumber: string | undefined,
+  status: string
+}
 
-  let charge = spacer.Percentage * 100;
+export default function BluetoothWrapper({ charge, serialNumber, status }: Props) {
+  const [child, setChild] = useState<Child>();
 
   useEffect(() => {
     const child = SecureStore.getItem("child");
@@ -29,29 +29,29 @@ export default function IndexSpacer() {
         <View style={style.titleContainer}>
           <Text style={style.title}>{child?.name}'s Spacer</Text>
           {/* Is this the serial number for the inhaler or the spacer? */}
-          <Text>{spacer.SerialNum}</Text>
+          <Text>{serialNumber}</Text>
         </View>
         <View style={style.imageContainer}>
           <Image
-            source={require('../../assets/images/Battery.png')}
+            source={require('../../../assets/images/Battery.png')}
           />
           <View>
             <Text style={style.spacerDetails}>Battery Remaining:</Text>
-            <Text style={style.spacerDetails}>{charge}%</Text>
+            <Text style={style.spacerDetails}>{charge}</Text>
           </View>
         </View>
         <View style={style.imageContainer}>
           <Image
-            source={require('../../assets/images/bluetooth.png')}
+            source={require('../../../assets/images/bluetooth.png')}
           />
           <View>
             <Text style={style.spacerDetails}>Bluetooth</Text>
-            <Text style={style.spacerDetails}>{spacer.Paired ? "Paired" : "Not Connected"}</Text>
+            <Text style={style.spacerDetails}>{status}</Text>
           </View>
         </View>
         <View style={style.imageContainer}>
           <Image
-            source={require('../../assets/images/sync.png')}
+            source={require('../../../assets/images/sync.png')}
           />
           <View>
             <Text style={style.spacerDetails}>Data Last Updated:</Text>
@@ -60,7 +60,8 @@ export default function IndexSpacer() {
         </View>
       </View>
       <Image
-        source={require('../../assets/images/Spacer.png')}
+        source={require('../../../assets/images/Spacer.png')}
+        style={style.spacerImage}
       />
     </View>
   );
@@ -103,5 +104,12 @@ const style = StyleSheet.create({
 
   spacerDetails: {
     paddingLeft: 10
+  },
+
+  spacerImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: "contain"
   }
 });
