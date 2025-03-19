@@ -20,34 +20,105 @@ const AccountPage = () => {
           </View>
         </View>
 
-        {/* Child Profiel Section */}
+        {/* Child Profile Section */}
         <View style={styles.ProfileSwitchingSection}>
           <Text style={styles.headerText}>Switch to</Text>
           <View style={styles.ProfileSwitching}>
-            <Image
-              source={require('@/assets/images/dog.png')} // Replace with your icon
-              style={styles.switchIcon}
-            />
-            <Image
-              source={require('@/assets/images/cat.png')} // Replace with your icon
-              style={styles.switchIcon}
-            />
+            <View style={{alignItems:"center", justifyContent: "center", paddingHorizontal:15,}}>
+              <Image
+                source={require('@/assets/images/dog.png')} // Replace with your icon
+                style={styles.switchIcon}
+              />
+              <Text style={{fontSize:16}}>Alex</Text>
+            </View>
+            <View style={{alignItems:"center", justifyContent: "center", paddingHorizontal:15,}}>
+              <Image
+                source={require('@/assets/images/cat.png')} // Replace with your icon
+                style={styles.switchIcon}
+              />
+              <Text style={{fontSize:16}}>Sally</Text>
+            </View>
 
-            <Image
-              source={require('@/assets/images/addButton.png')} // Replace with your icon
-              style={styles.switchIcon}
-            />
+            <View style={{alignItems:"center", justifyContent: "center", paddingHorizontal:15,}}>
+              <Image
+                source={require('@/assets/images/addButton.png')} // Replace with your icon
+                style={styles.switchIcon}
+              />
+              <Text style={{fontSize:16}}>Add Account</Text>
+            </View>
           </View>
         </View>
 
         {/* Settings List */}
-        <View style={styles.settingsList}>
-          <Text style={styles.settingsItem}>Account Preferences</Text>
-          <Text style={styles.settingsItem}>Display Settings</Text>
-          <Text style={styles.settingsItem}>Manage Profiles</Text>
-          <Text style={styles.settingsItem}>Notifications</Text>
-          <Text style={styles.settingsItem}>Terms and Conditions</Text>
-          <Text style={styles.settingsItem}>Help Center</Text>
+        <View style={styles.ProfileSwitchingSection}>
+          <Text style={styles.headerText}>Settings</Text>
+          <View style={styles.settingsList}>
+            <View style={styles.settingListItem}>
+              <Image 
+                source={require('@/assets/images/profilesettings.png')}
+                style={{marginRight:10, width: 50, height: 50,}}
+              />
+              <View style={{paddingHorizontal:10}}>
+                <Text style={styles.settingsItem}>Account Preferences</Text>
+                <Text style={styles.settingsItemSmall}>Profile settings, passwords, subscriptions</Text>
+              </View>
+            </View>
+
+            <View style={styles.settingListItem}>
+              <Image 
+                source={require('@/assets/images/brightness.png')}
+                style={{marginRight:10, width: 50, height: 50,}}
+              />
+              <View style={{paddingHorizontal:10}}>
+                <Text style={styles.settingsItem}>Display Settings</Text>
+                <Text style={styles.settingsItemSmall}>Brightness, theme, appearance</Text>
+              </View>
+            </View>
+
+            <View style={styles.settingListItem}>
+              <Image 
+                source={require('@/assets/images/grid.png')}
+                style={{marginRight:10, width: 50, height: 50,}}
+              />
+              <View style={{paddingHorizontal:10}}>
+                <Text style={styles.settingsItem}>Manage Profiles</Text>
+                <Text style={styles.settingsItemSmall}>Edit, organize, and manage child profiles</Text>
+              </View>
+            </View>
+
+            <View style={styles.settingListItem}>
+              <Image 
+                source={require('@/assets/images/notifications.png')}
+                style={{marginRight:10, width: 50, height: 50,}}
+              />
+              <View style={{paddingHorizontal:10}}>
+                <Text style={styles.settingsItem}>Notifications</Text>
+                <Text style={styles.settingsItemSmall}>Reminders, delivery style, alerts</Text>
+              </View>
+            </View>
+
+            <View style={styles.settingListItem}>
+              <Image 
+                source={require('@/assets/images/papercheck.png')}
+                style={{marginRight:10, width: 50, height: 50,}}
+              />
+              <View style={{paddingHorizontal:10}}>
+                <Text style={styles.settingsItem}>Terms and Conditions</Text>
+                <Text style={styles.settingsItemSmall}>User agreement, privacy policy, fine print</Text>
+              </View>
+            </View>
+
+            <View style={styles.settingListItem}>
+              <Image 
+                source={require('@/assets/images/helpdesk.png')}
+                style={{marginRight:10, width: 50, height: 50,}}
+              />
+              <View style={{paddingHorizontal:10}}>
+                <Text style={styles.settingsItem}>Help Center</Text>
+                <Text style={styles.settingsItemSmall}>Troubleshooting, customer service</Text>
+              </View>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -87,6 +158,8 @@ const styles = StyleSheet.create({
   ProfileSwitching: {
     flexDirection: 'row',
     alignItems: "center",
+    marginBottom:10,
+    marginTop:10,
   },
   headerText:{
     fontSize: 28,
@@ -98,13 +171,21 @@ const styles = StyleSheet.create({
     height: 60,
   },
   settingsList: {
-    marginTop: 16,
+    marginTop: 2,
+  },
+  settingListItem:{
+    flexDirection:'row',
+    alignItems:"center",
+    padding:10,
+    marginBottom:5,
   },
   settingsItem: {
-    fontSize: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#DDD',
+    fontSize: 20,
+    fontWeight:"bold",
+  },
+  settingsItemSmall:{
+    fontSize:14,
+    color:"gray",
   },
 });
 
