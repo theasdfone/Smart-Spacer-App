@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Profile from "../../components/util/profilepicture";
@@ -29,7 +29,12 @@ const AccountPage = () => {
               style={styles.switchIcon}
             />
             <Image
-              source={require('@/assets/images/dog.png')} // Replace with your icon
+              source={require('@/assets/images/cat.png')} // Replace with your icon
+              style={styles.switchIcon}
+            />
+
+            <Image
+              source={require('@/assets/images/addButton.png')} // Replace with your icon
               style={styles.switchIcon}
             />
           </View>
