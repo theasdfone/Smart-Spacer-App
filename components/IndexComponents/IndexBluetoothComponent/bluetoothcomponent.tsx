@@ -73,8 +73,8 @@ export default function BluetoothComponent() {
             if (char?.value) {
                 // Decode the received chunk (base64 to UTF-8 string)
                 const value = Buffer.from(char.value, 'base64').toString('utf-8');
-                // console.log('Received chunk:', value);
-                // If the chunk contains the START keyword, we start receiving data
+                
+                // If the chunk contains the #, we start receiving data
                 if (value.includes("#")) {
                     isReceiving = true;
                     currentBuffer = ``;  // Clear any previous data
@@ -120,7 +120,7 @@ export default function BluetoothComponent() {
                             // Regex tries to find and retrieve the json (aka everything between the brackets: {})
                             const exhalationData = result.match(/({.*})/);
                             let exhalation = exhalationData ? exhalationData[0].toString() : "";
-                            console.log("EXHALATION:", exhalationData);
+
                             setExhalationData(exhalation);
 
                             // Reset buffer and receiving state

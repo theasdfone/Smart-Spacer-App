@@ -2,9 +2,11 @@ import { Journal } from "@/components/models/journal";
 import { journalServices } from "@/services/journalservices";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SecureStore from 'expo-secure-store';
+import JournalSurveysHeader from "@/components/JournalSurveyComponents/journalsurveysheader";
+import JournalSurveyQuestions from "@/components/JournalSurveyComponents/journalsurveysquestions";
 
 export default function JournalSurvey() {
     const { date } = useLocalSearchParams();
@@ -34,7 +36,16 @@ export default function JournalSurvey() {
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <Text>Journal: {journal?.toString()} {date}</Text>
+                <View style={style.header}>
+                    <JournalSurveysHeader
+                        date={date.toString()}
+                    />
+                </View>
+                <View style={style.components}>
+                    <JournalSurveyQuestions 
+                        journal={journal}
+                    />
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -46,13 +57,12 @@ const style = StyleSheet.create({
         backgroundColor: "white",
     },
 
-    calendar: {
+    header: {
         marginTop: 40,
     },
 
     components: {
-        marginTop: 20,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
 
     end: {
