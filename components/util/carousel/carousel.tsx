@@ -49,7 +49,7 @@ export default function CarouselComponent({ images, onSelectImage, selectedImage
           ref={ref}
           width={75}
           height={75}
-          style={{ width: 300, height: 75 }}
+          style={{ width: 270, height: 75 }}
           data={images}
           modeConfig={baseOptions}
           mode="parallax"
@@ -63,6 +63,7 @@ export default function CarouselComponent({ images, onSelectImage, selectedImage
               <Image
                 style={selectedImage === item ? styles.selected : styles.content}
                 source={item}
+                resizeMode="contain"
               />
             </TouchableOpacity>
           )}
