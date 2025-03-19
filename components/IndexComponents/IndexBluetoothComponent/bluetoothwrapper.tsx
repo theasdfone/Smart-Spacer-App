@@ -61,6 +61,7 @@ export default function BluetoothWrapper({ charge, serialNumber, status }: Props
       </View>
       <Image
         source={require('../../../assets/images/Spacer.png')}
+        style={style.spacerImage}
       />
     </View>
   );
@@ -103,5 +104,12 @@ const style = StyleSheet.create({
 
   spacerDetails: {
     paddingLeft: 10
+  },
+
+  spacerImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: "contain"
   }
 });

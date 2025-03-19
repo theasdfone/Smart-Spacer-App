@@ -15,7 +15,7 @@ export default function Index() {
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        <View style={style.components}>
+        <View style={style.header}>
           <IndexHeader/>
         </View>
         <View style={style.components}>
@@ -43,11 +43,15 @@ const style = StyleSheet.create({
     main: {
         flex: 1,
         backgroundColor: "white",
-        paddingHorizontal: 20,
+    },
+
+    header: {
+      marginTop: 40
     },
 
     components: {
-      marginTop: 40
+      marginTop: 40,
+      paddingHorizontal: 20,
     },
 
     end: {

@@ -27,27 +27,53 @@ export default function IndexHeader() {
     if (child) {
       let childObj = JSON.parse(child);
       setChild(childObj);
-      
+
       let provider_id = childObj.provider_id;
       fetchProviderData(provider_id);
     } else {
       throw console.error("Child not found");
     }
   }, []);
-  
-  return (
-    <View style={style.welcome}>
-      <View style={style.navbar}>
-        <Text style={style.header}>Welcome {child?.parent_id}!</Text>
-        <Profile />
-      </View>
 
-      <Text>Your next appointment with {provider?.name} is MM/DD/YYYY at HH:MM</Text>
+  return (
+    <View>
+      <View style={style.shadows}>
+        <View style={style.container}>
+          <View style={style.navbarContainer}>
+            <View style={style.welcome}>
+              <View style={style.navbar}>
+                <Text style={style.header}>Welcome {child?.parent_id}!</Text>
+                <Profile />
+              </View>
+
+              <Text>{child?.name}'s next appointment with {provider?.name} is March 20th at 2:00 P.M.</Text>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
 
 const style = StyleSheet.create({
+  shadows: {
+    overflow: "hidden",
+    paddingBottom: 5,
+  },
+
+  container: {
+    backgroundColor: '#fff',
+    elevation: 5,
+  },
+
+  navbarContainer: {
+    flexDirection: 'row',
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    height: 100
+  },
+
   welcome: {
     flex: 1,
   },

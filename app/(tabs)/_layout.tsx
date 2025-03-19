@@ -36,11 +36,11 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="book" color={color}/>
         }}/>
-        <Tabs.Screen name="profile" 
+        <Tabs.Screen name="account" 
         options={{
-          title: 'Profile',
+          title: 'Account',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="book" color={color}/>
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color}/>
         }}/>
       </Tabs>
   );
