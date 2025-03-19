@@ -28,7 +28,7 @@ export default function CarouselComponent({ images, onSelectImage, selectedImage
 
   const clickPrev = () => {
     if (ref.current) {
-      if (ref.current.getCurrentIndex() < images.length - 4) {
+      if (ref.current.getCurrentIndex() < images.length - 1) { // Adjusted condition
         ref.current.next(); // Go to the next item
       }
     }
@@ -37,19 +37,17 @@ export default function CarouselComponent({ images, onSelectImage, selectedImage
   return (
     <View style={styles.container}>
       {/* Left Arrow */}
-      <View>
-        <TouchableOpacity onPress={clickNext}>
-          <Image style={styles.arrow} source={require('./left-arrow.png')} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={clickNext} style={styles.arrowContainer}>
+        <Image style={styles.arrow} source={require('./left-arrow.png')} />
+      </TouchableOpacity>
 
       {/* Carousel */}
-      <View style={styles.itemContainer}>
+      <View style={styles.carouselWrapper}>
         <Carousel
           ref={ref}
           width={75}
           height={75}
-          style={{ width: 270, height: 75 }}
+          style={{ width: '100%', height: 75 }} // Use 100% width
           data={images}
           modeConfig={baseOptions}
           mode="parallax"
@@ -63,7 +61,7 @@ export default function CarouselComponent({ images, onSelectImage, selectedImage
               <Image
                 style={selectedImage === item ? styles.selected : styles.content}
                 source={item}
-                resizeMode="contain"
+                resizeMode="contain" // Ensure the image scales proportionally
               />
             </TouchableOpacity>
           )}
@@ -71,11 +69,9 @@ export default function CarouselComponent({ images, onSelectImage, selectedImage
       </View>
 
       {/* Right Arrow */}
-      <View>
-        <TouchableOpacity onPress={clickPrev}>
-          <Image style={styles.arrow} source={require('./right-arrow.png')} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={clickPrev} style={styles.arrowContainer}>
+        <Image style={styles.arrow} source={require('./right-arrow.png')} />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -86,9 +82,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FAFDF6',
     borderRadius: 5,
+    paddingHorizontal: 10, // Add horizontal padding to the container
   },
-  itemContainer: {
-    paddingVertical: 10,
+  carouselWrapper: {
+    flex: 1, // Allow the carousel to take up remaining space
+    overflow: 'visible', // Ensure content isn't clipped
+  },
+  arrowContainer: {
+    padding: 5, // Add padding around the arrows
   },
   selected: {
     width: 75,
