@@ -25,6 +25,7 @@ export default function LoginPage() {
 
                 await authUser.user.getIdToken().then((token) => {
                     router.replace("/(tabs)");
+                    console.log(token);
                     SecureStore.setItem("secure_token", token);
                 }).catch((err) => {
                     console.error(err)

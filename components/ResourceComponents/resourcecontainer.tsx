@@ -21,8 +21,8 @@ export default function ResourceContainer({resources}: Props) {
                                     style={style.resourceImg}
                                     source={require('../../assets/images/resource-pic1.png')}
                                 />
-                                <View style={style.title}>
-                                    <Text>{resource.title}</Text>
+                                <View style={style.titleContainer}>
+                                    <Text style={style.title}>{resource.title}</Text>
                                     <Text>{resource.description}</Text>
                                 </View>
                             </View>
@@ -54,7 +54,11 @@ const style = StyleSheet.create({
         borderRadius: 5
     },
 
-    title: {
+    titleContainer: {
         paddingTop: 10
+    },
+
+    title: {
+        fontWeight: "bold"
     }
 });
