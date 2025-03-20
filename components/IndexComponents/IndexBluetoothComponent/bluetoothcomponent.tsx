@@ -135,9 +135,9 @@ export default function BluetoothComponent() {
 
                             // Type 1 is for inhalation sensor data
                             let parsedInhalationDetails = inhalationDetails.map((entry: any) => ({
-                                spacer_id: entry.attempt,
-                                flow_rate: parseInt(entry.flowRate?.replace('L/min', '')) || null,
-                                percentage: parseInt(entry.percentage?.replace('%', '')) || null,
+                                spacer_id: 1,
+                                flow_rate: parseInt(entry.flowRate?.replace('L/min', '') || 0) || null,
+                                percentage: parseInt(entry.percentage?.replace('%', '') || 0) || null,
                                 zone: entry.zone,
                                 time_stamp: entry.timestamp ?
                                     // Fix date format and extract date part
