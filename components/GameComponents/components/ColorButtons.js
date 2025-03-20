@@ -18,13 +18,11 @@ const styles = StyleSheet.create({
   colorButtonsContainer: {
     flexDirection: "row",
     width: "100%",
-    justifyContent: "space-evenly",
-    marginBottom: 50,
-    paddingHorizontal: 20,
+    justifyContent:"space-between",
+    paddingHorizontal: 40,
   },
   buttonImage: {
-    width: 80, // Adjust size as needed
-    height: 80, // Adjust size as needed
+    maxWidth: "90%", // Adjust size as needed
     resizeMode: "contain",
   },
   buttonText: {

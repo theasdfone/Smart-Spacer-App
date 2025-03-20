@@ -4,17 +4,14 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   fullScreenContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "blue",
   },
   backgroundImage: {
     position: "absolute",
-    width: 480,
-    height: 800,
+    width: "100%",
+    height: "100%",
     objectFit: "fill",
   },
-  container: {
+  questModuleContainer: {
     flex: 1,
     width: "100%",
     height: "100%",
@@ -106,4 +103,14 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff",
   },
+  interactiveImageContainer: {
+    marginLeft: "20%"
+  },
+  bunnyBowlContainer: {
+    bottom: 40
+  },
+  colorButtons: {
+    position: "absolute",
+    marginTop: "85%"
+  }
 });

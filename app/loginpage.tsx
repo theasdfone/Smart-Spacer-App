@@ -24,8 +24,8 @@ export default function LoginPage() {
                 const authUser = await auth().signInWithCredential(googleCredential);
 
                 await authUser.user.getIdToken().then((token) => {
-                    router.replace("/(tabs)");
                     SecureStore.setItem("secure_token", token);
+                    router.replace("/(tabs)");
                 }).catch((err) => {
                     console.error(err)
                 });

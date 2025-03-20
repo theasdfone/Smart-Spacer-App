@@ -31,10 +31,10 @@ const FullScreenImageModal = ({
           style={styles.backgroundImage}
           resizeMode="cover"
         />
-        <View style={{ top: 60 }}>
+        <View style={selectedImage == require("../assets/FoodBowl.png") ? { top: 99 } : { top: 60 }}>
           <Image
-            source={selectedImage || image}
-            style={imageSize}
+            source={selectedImage}
+            style={selectedImage == require("../assets/FoodBowl.png") ? { width: 210, height: 400 } : imageSize}
             resizeMode="contain"
           />
         </View>

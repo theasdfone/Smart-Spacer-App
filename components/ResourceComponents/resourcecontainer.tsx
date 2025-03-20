@@ -10,7 +10,7 @@ export default function ResourceContainer({resources}: Props) {
  return (
       <View style={style.container}>
         {
-            resources.map((resource) => {
+            resources?.map((resource) => {
                 return(
                     <View style={style.resourceContainer}>
                         <Link
