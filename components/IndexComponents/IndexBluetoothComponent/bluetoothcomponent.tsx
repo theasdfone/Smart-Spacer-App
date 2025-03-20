@@ -120,9 +120,10 @@ export default function BluetoothComponent() {
                             const data = JSON.parse(fixedJson);
 
                             // let medication = data.header;
+                            // let medication = data.header.medicationType;
                             let inhalationDetails = data.details;
 
-                            // Type 1 is for inhalation sensor data
+                            // Parse Medication and Update Dose Count
                             // let parsedMedication = medication.map((entry: any) => ({
                             //     spacer_id: entry.attempt,
                             //     time_stamp: entry.timestamp ?
