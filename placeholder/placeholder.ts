@@ -2,99 +2,99 @@ export const placeholder = {
     notifications: [
         {
           NotifId: 1,
-          Title: 'Notification1',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: 'Spacer Cleaning',
+          Description: "Make Sure to Clean Your Spacer!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 2,
-          Title: 'Notification2',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication!",
+          Description: "Be sure to take your medication before you start your day!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 3,
-          Title: 'Notification3',
-          Description: "Test Notificationasdfjklasdjsakldgsdklgjlkasdgjskladgjalsk",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication",
+          Description: "Don't forget to take your medication before bed",
+          Time: "2025-03-20"
         },
         {
           NotifId: 4,
-          Title: 'Notification4',
-          Description: "Test ;dgjkl;asdgjlksadgkljs;dglk",
-          Time: "dd/mm/yyyy"
+          Title: 'System Notification',
+          Description: "User Account Updated",
+          Time: "2025-03-20"
         },
         {
           NotifId: 5,
-          Title: 'Notification1',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: 'Spacer Cleaning',
+          Description: "Make Sure to Clean Your Spacer!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 6,
-          Title: 'Notification2',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication!",
+          Description: "Be sure to take your medication before you start your day!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 7,
-          Title: 'Notification3',
-          Description: "Test Notificationasdfjklasdjsakldgsdklgjlkasdgjskladgjalsk",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication",
+          Description: "Don't forget to take your medication before bed",
+          Time: "2025-03-20"
         },
         {
           NotifId: 8,
-          Title: 'Notification4',
-          Description: "Test ;dgjkl;asdgjlksadgkljs;dglk",
-          Time: "dd/mm/yyyy"
+          Title: 'System Notification',
+          Description: "User Account Updated",
+          Time: "2025-03-20"
         },
         {
           NotifId: 9,
-          Title: 'Notification1',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: 'Spacer Cleaning',
+          Description: "Make Sure to Clean Your Spacer!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 10,
-          Title: 'Notification2',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication!",
+          Description: "Be sure to take your medication before you start your day!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 11,
-          Title: 'Notification3',
-          Description: "Test Notificationasdfjklasdjsakldgsdklgjlkasdgjskladgjalsk",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication",
+          Description: "Don't forget to take your medication before bed",
+          Time: "2025-03-20"
         },
         {
           NotifId: 12,
-          Title: 'Notification4',
-          Description: "Test ;dgjkl;asdgjlksadgkljs;dglk",
-          Time: "dd/mm/yyyy"
+          Title: 'System Notification',
+          Description: "User Account Updated",
+          Time: "2025-03-20"
         },
         {
           NotifId: 13,
-          Title: 'Notification1',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: 'Spacer Cleaning',
+          Description: "Make Sure to Clean Your Spacer!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 14,
-          Title: 'Notification2',
-          Description: "Test Notification",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication!",
+          Description: "Be sure to take your medication before you start your day!",
+          Time: "2025-03-20"
         },
         {
           NotifId: 15,
-          Title: 'Notification3',
-          Description: "Test Notificationasdfjklasdjsakldgsdklgjlkasdgjskladgjalsk",
-          Time: "dd/mm/yyyy"
+          Title: "Don't Miss your Medication",
+          Description: "Don't forget to take your medication before bed",
+          Time: "2025-03-20"
         },
         {
           NotifId: 16,
-          Title: 'Notification4',
-          Description: "Test ;dgjkl;asdgjlksadgkljs;dglk",
-          Time: "dd/mm/yyyy"
+          Title: 'System Notification',
+          Description: "User Account Updated",
+          Time: "2025-03-20"
         }
     ],
 
