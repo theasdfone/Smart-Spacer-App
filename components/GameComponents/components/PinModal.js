@@ -10,7 +10,7 @@ import {
   Keyboard,
 } from "react-native";
 
-const PinModal = ({ visible, onClose }) => {
+const PinModal = ({ setGameModalVisible, visible, onClose }) => {
   const [pin, setPin] = useState("");
   const pinInputRef = useRef(null);
 
@@ -30,13 +30,9 @@ const PinModal = ({ visible, onClose }) => {
   };
 
   const handleSubmit = () => {
-    if (pin.length === 4) {
-      alert("PIN submitted successfully!");
+      setGameModalVisible(false);
       setPin("");
       onClose();
-    } else {
-      alert("Enter a 4-digit PIN.");
-    }
   };
 
   const handleTextChange = (text) => {

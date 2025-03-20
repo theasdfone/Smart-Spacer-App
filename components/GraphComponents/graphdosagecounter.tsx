@@ -35,7 +35,7 @@ export default function GraphDosageCounter() {
             </View>
             <View style={style.doseContainers}>
                 {
-                    spacerMedications.map((spacerMedication) =>
+                    spacerMedications?.map((spacerMedication) =>
 
                         <View style={spacerMedication.colour == "blue" ? style.rescueContainer : style.maintainerContainer}>
                             <View style={style.progressCircleTextContainer}>

@@ -97,7 +97,7 @@ export default function GraphCalendar({spacerUse, setSpacerUse}: Props) {
                 <View style={style.statusCalendarTable}>
                     {
                         // when we fetch the data the backend will guarantee its sorted from start date to end date
-                        spacerUse.map((data) => {
+                        spacerUse?.map((data) => {
                             let morningTechSource = techniqueSource(data.morning_technique);
                             let eveningTechSource = techniqueSource(data.evening_technique);
                             

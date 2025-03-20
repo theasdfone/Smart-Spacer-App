@@ -28,7 +28,7 @@ export default function resourceScreen() {
       >
         <View style={style.header}>
           <ResourceHeader
-            resultSize={resources.length}
+            resultSize={resources?.length}
           />
         </View>
         <View style={style.components}>

@@ -33,13 +33,12 @@ import {
 } from "./utils";
 import { styles } from "./stylesGame";
 
-const GameScreen = () => {
+const GameScreen = ({setGameModalVisible}) => {
   const [exp, setExp] = useState(0);
   const [level, setLevel] = useState(1);
   const [showQuests, setShowQuests] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalColor, setModalColor] = useState("#aaa");
-  const [colorIndex, setColorIndex] = useState(0);
   const [image, setImage] = useState(images.original);
   const [imageSize, setImageSize] = useState({ width: 200, height: 400 });
   const [timeoutId, setTimeoutId] = useState(null);
@@ -48,7 +47,6 @@ const GameScreen = () => {
   const [showPinModal, setShowPinModal] = useState(false);
   const [showRedModal, setShowRedModal] = useState(false);
   const [showGreenModal, setShowGreenModal] = useState(false);
-  const [mainImage, setMainImage] = useState(images.original);
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [showQuestsModal, setShowQuestsModal] = useState(false);
   const bowlImage = require("./assets/FoodBowl.png");
@@ -77,19 +75,20 @@ const GameScreen = () => {
       image: require("./assets/Soap.png"),
     },
   ]);
-  const [bkgImageSize, setBkgImageSize] = useState({ width: 0, height: 0 });
 
   const redPictures = [
-    require("./carousel/image1.png"), // Replace with your image paths
-    require("./carousel/image2.png"),
-    require("./carousel/image3.png"),
-    null,
+    require("./assets/FoodBowl.png"),
+    require("./carousel/food/burger_bowl.png"), // Replace with your image paths
+    require("./carousel/food/icecream_bowl.png"),
+    require("./carousel/food/oj_bowl.png"),
+    require("./carousel/food/sushi_bowl.png"),
   ];
 
   const greenPictures = [
-    require("./carousel/image1.png"), // Replace with your image paths
-    require("./carousel/image2.png"),
-    require("./carousel/image3.png"),
+    require("./bunny/neutral.png"),
+    require("./carousel/clothes/Glasses.png"), // Replace with your image paths
+    require("./carousel/clothes/Hat.png"),
+    require("./carousel/clothes/Shirt.png"),
   ];
 
   const buttonImages = [
@@ -110,9 +109,10 @@ const GameScreen = () => {
   };
   const handlePress = (amount) =>
     addExp(exp, setExp, level, setLevel, amount, MAX_EXP);
-  const handleTaskToggle = (id) => toggleTask(tasks, setTasks, id, handlePress);
+
   const handleCycleImage = (position) =>
     cycleImage(setImage, images, timeoutId, setTimeoutId, position);
+
   const handleImageTap = (evt) =>
     handleImagePress(
       evt,
@@ -122,8 +122,7 @@ const GameScreen = () => {
       timeoutId,
       setTimeoutId
     );
-  const handleChangeButtonColor = () =>
-    changeButtonColor(colorIndex, setColorIndex, BUTTON_COLORS);
+
   const handleOpenModal = (type, color = null) => {
     if (type === "red") {
       setBackgroundImage(redBackgroundImage); // Set the red background image
@@ -144,14 +143,11 @@ const GameScreen = () => {
     setShowYellowModal(false); // Close the yellow modal
     setShowPinModal(true); // Open the PIN modal
   };
-  const handleSelectPicture = (picture) => {
-    setMainImage(picture); // Update the main image
-  };
 
   return (
     <View style={styles.fullScreenContainer}>
       <Image source={mainBackgroundImage} style={styles.backgroundImage} />
-      <View style={styles.container}>
+      <View style={styles.questModuleContainer}>
         <QuestsModal
           visible={showQuestsModal}
           onClose={() => setShowQuestsModal(false)}
@@ -171,6 +167,7 @@ const GameScreen = () => {
           onYes={handleYesButtonPress}
         />
         <PinModal
+          setGameModalVisible={setGameModalVisible}
           visible={showPinModal}
           onClose={() => setShowPinModal(false)}
         />
@@ -203,9 +200,8 @@ const GameScreen = () => {
 
       <View
         style={{
-          width: "100%",
           alignItems: "left",
-          paddingHorizontal: 40,
+          paddingHorizontal: 20,
         }}
       >
         <View style={styles.expContainer}>
@@ -239,7 +235,7 @@ const GameScreen = () => {
             width: 70,
             alignItems: "center",
             borderRadius: 15,
-            height: 25,
+            height: 28,
             zIndex: 3,
             bottom: 5,
             right: 4,
@@ -249,7 +245,7 @@ const GameScreen = () => {
         </View>
       </View>
 
-      <View style={{ right: 150 }}>
+      <View style={{ right: "37%" }}>
         <ToggleButton
           showQuests={showQuests}
           onPress={() => {
@@ -257,37 +253,36 @@ const GameScreen = () => {
           }}
         />
       </View>
-      <View style={{ top: 50, alignItems: "center", width: "100%" }}>
+      <View>
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "flex-end",
-            justifyContent: "center",
-            width: "100%",
             position: "relative",
           }}
         >
-          <View style={{ top: 20 }}>
-            <InteractiveImage
-              image={selectedOutfit || image}
-              imageSize={imageSize}
-              onPressIn={handleImageTap}
-            />
-          </View>
+          <View style={styles.bunnyBowlContainer}>
+            <View style={styles.interactiveImageContainer}>
+              <InteractiveImage
+                image={selectedOutfit || image}
+                imageSize={imageSize}
+                onPressIn={handleImageTap}
+              />
+            </View>
 
-          <View style={{ position: "absolute", left: "65%", bottom: -60 }}>
-            <InteractiveImage
-              image={selectedBowl || bowlImage} // Show the selected bowl or default bowl
-              imageSize={{ width: 125, height: 200 }} // Adjust size as needed
-              onPressIn={handleImageTap}
+            <View style={{ position: "absolute", left: "65%", marginTop: "65%" }}>
+              <InteractiveImage
+                image={selectedBowl || bowlImage} // Show the selected bowl or default bowl
+                imageSize={{ width: 125, height: 200 }} // Adjust size as needed
+                onPressIn={handleImageTap}
+              />
+            </View>
+          </View>
+          <View style={styles.colorButtons}>
+            <ColorButtons
+              images={buttonImages}
+              onPress={(color) => handleOpenModal(color)}
             />
           </View>
         </View>
-
-        <ColorButtons
-          images={buttonImages}
-          onPress={(color) => handleOpenModal(color)}
-        />
       </View>
     </View>
   );

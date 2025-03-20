@@ -34,7 +34,10 @@ const QuestsModal = ({
             />
             <Text style={styles.modalTitle}>To Do</Text>
             <TouchableOpacity onPress={onClose}>
-              <Text style={styles.closeButton}>✖</Text>
+              <Image
+                source={require("@/assets/images/x-delete.png")}
+                style={styles.xIcon}
+              />
             </TouchableOpacity>
           </View>
 
@@ -88,8 +91,13 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   headerIcon: {
-    width: 24,
-    height: 24,
+    maxWidth: "100%",
+    tintColor: "white",
+    zIndex: 10,
+  },
+  xIcon: {
+    width: 20,
+    height: 20,
     tintColor: "white",
     zIndex: 10,
   },

@@ -11,10 +11,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function GraphScreen() {
   const [spacerUse, setSpacerUse] = useState<SpacerUse[]>([]);
 
-  const counts = spacerUse.reduce((acc, data) => {
+  const counts = spacerUse ? spacerUse.reduce((acc, data) => {
     data.morning_technique === 2 || data.evening_technique === 2 ? acc.missed++ : acc.onTime++;
     return acc;
-  }, { onTime: 0, missed: 0 });
+  }, { onTime: 0, missed: 0 }) : {onTime: 0, missed: 0};
   
   const { onTime, missed } = counts;
   

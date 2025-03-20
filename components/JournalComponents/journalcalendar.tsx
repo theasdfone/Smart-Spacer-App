@@ -37,16 +37,18 @@ export default function JournalCalendar({ setSelectedDate }: Props) {
 
     let markedDatesArray: any = [];
 
-    journals.map((item, i) => {
-        markedDatesArray.push({
-            date: item.date,
-            dots: [
-                {
-                    color: "green",
-                },
-            ],
-        });
-    });
+    if(journals) {
+        journals.map((item, i) => {
+            markedDatesArray.push({
+                date: item.date,
+                dots: [
+                    {
+                        color: "green",
+                    },
+                ],
+            });
+        });    
+    }
 
     return (
         <View style={style.shadows}>
