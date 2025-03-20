@@ -58,7 +58,7 @@ const style = StyleSheet.create({
 
   gameButton: {
     backgroundColor: "#119DA4",
-    height: 35,
+    height: 50,
     width: 175,
     borderRadius: 40,
     justifyContent: "center"

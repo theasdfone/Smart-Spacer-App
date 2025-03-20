@@ -12,35 +12,36 @@ export default function TabsLayout() {
           height: 70 + insets.bottom,
         },
         tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: "#119DA4"
       }}>
         <Tabs.Screen name ="index" options={{
           title: 'Home',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />
+          tabBarIcon: ({ color, focused }) => <FontAwesome size={28} name="home" color={focused ? "#119DA4" : color} />
         }}/>
         <Tabs.Screen name="(journal)" 
         options={{
           title: 'Journal',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="edit" color={color} />
+          tabBarIcon: ({ color, focused }) => <FontAwesome size={28} name="edit" color={focused ? "#119DA4" : color} />
         }}/>
         <Tabs.Screen name="graphs" 
         options={{
           title: 'Graphs',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="line-chart" color={color} />
+          tabBarIcon: ({ color, focused }) => <FontAwesome size={28} name="line-chart" color={focused ? "#119DA4" : color} />
         }}/>
         <Tabs.Screen name="resources" 
         options={{
           title: 'Resources',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="book" color={color}/>
+          tabBarIcon: ({ color, focused }) => <FontAwesome size={28} name="book" color={focused ? "#119DA4" : color}/>
         }}/>
         <Tabs.Screen name="account" 
         options={{
           title: 'Account',
           headerShown: false,
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="user" color={color}/>
+          tabBarIcon: ({ color, focused }) => <FontAwesome size={28} name="user" color={focused ? "#119DA4" : color}/>
         }}/>
       </Tabs>
   );

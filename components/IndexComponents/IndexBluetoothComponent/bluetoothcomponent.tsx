@@ -4,6 +4,10 @@ import { BleManager, Device } from "react-native-ble-plx";
 import { requestBluetoothPermission } from "./useAndroidPermissions";
 import { BluetoothCommands } from "./bluetoothcommands";
 import BluetoothWrapper from "./bluetoothwrapper";
+import { spacerUseInfoServices } from "@/services/spaceruseinfoservices";
+import { Child } from "@/components/models/child";
+import * as SecureStore from 'expo-secure-store';
+import { sensorDetailServices } from "@/services/sensordataservices";
 
 const bleManager = new BleManager();
 global.Buffer = require('buffer').Buffer;
@@ -25,7 +29,19 @@ export default function BluetoothComponent() {
     // Variables for Receiving Data from RX Buffer 
     const [inhalationData, setInhalationData] = useState(''); // Store inhalation data
     const [batteryData, setBatteryData] = useState(''); // Store battery data
-    const [exhalationData, setExhalationData] = useState(''); // Store exhalation data
+
+    // Child
+    const [child, setChild] = useState<Child>();
+
+    useEffect(() => {
+        const child = SecureStore.getItem("child");
+
+        if (child) {
+            setChild(JSON.parse(child));
+        } else {
+            throw console.error("Child not found");
+        }
+    }, []);
 
     // This checks to see if permissions are enabled and then attempts to connect or reconnect to the Smart Spacer device 
     useEffect(() => {
@@ -73,7 +89,7 @@ export default function BluetoothComponent() {
             if (char?.value) {
                 // Decode the received chunk (base64 to UTF-8 string)
                 const value = Buffer.from(char.value, 'base64').toString('utf-8');
-                
+
                 // If the chunk contains the #, we start receiving data
                 if (value.includes("#")) {
                     isReceiving = true;
@@ -92,10 +108,47 @@ export default function BluetoothComponent() {
                         // Check if the chunk contains the INHALATION keyword, which indicates this json is for inhalation data
                         if (result.includes(BluetoothCommands.INHALATION)) {
                             // Regex tries to find and retrieve the json (aka everything between the brackets: {})
-                            const inhalationData = result.match(/\[.*?\]/);
-                            let inhalation = inhalationData ? inhalationData[0].toString() : "";
+                            const inhalationData = result.match(/({.*})/);
+                            let inhalation = inhalationData ? inhalationData[0].toString() : "{}";
 
-                            setInhalationData(inhalation);
+                            // Fix JSON syntax errors in the input string
+                            const fixedJson = inhalation
+                                .replace(/"header:"/g, '"header":')  // Add missing colon
+                                .replace(/,\s*]/g, ']');            // Remove trailing comma
+
+                            // Parse the JSON
+                            const data = JSON.parse(fixedJson);
+
+                            // let medication = data.header;
+                            let inhalationDetails = data.details;
+
+                            // Type 1 is for inhalation sensor data
+                            // let parsedMedication = medication.map((entry: any) => ({
+                            //     spacer_id: entry.attempt,
+                            //     time_stamp: entry.timestamp ?
+                            //         // Fix date format and extract date part
+                            //         entry.timestamp.slice(0, 10) : "",
+                            //     trials: entry.trial,
+                            //     type: 1
+                            // }));
+
+                            // Type 1 is for inhalation sensor data
+                            let parsedInhalationDetails = inhalationDetails.map((entry: any) => ({
+                                spacer_id: entry.attempt,
+                                flow_rate: parseInt(entry.flowRate?.replace('L/min', '')) || null,
+                                percentage: parseInt(entry.percentage?.replace('%', '')) || null,
+                                zone: entry.zone,
+                                time_stamp: entry.timestamp ?
+                                    // Fix date format and extract date part
+                                    entry.timestamp.slice(0, 10) : "",
+                                trials: entry.trial,
+                                type: 1
+                            }));
+
+                            // console.log(parsedMedication.toString());
+                            console.log(parsedInhalationDetails.toString());
+
+                            sensorDetailServices.createSensorDetail(parsedInhalationDetails);
 
                             // Reset buffer and receiving state
                             currentBuffer = ``;
@@ -119,9 +172,23 @@ export default function BluetoothComponent() {
                         if (result.includes(BluetoothCommands.EXHALATION)) {
                             // Regex tries to find and retrieve the json (aka everything between the brackets: {})
                             const exhalationData = result.match(/({.*})/);
-                            let exhalation = exhalationData ? exhalationData[0].toString() : "";
+                            let exhalation = exhalationData ? JSON.parse(exhalationData[0].toString()) : "{}";
 
-                            setExhalationData(exhalation);
+                            // Type 2 is for exhalation sensor data
+                            let parsedExhalation = exhalation.PEFRs.map((entry: any) => ({
+                                spacer_id: entry.attempt,
+                                flow_rate: parseInt(entry.flowRate?.replace('L/min', '')) || null,
+                                percentage: parseInt(entry.percentage?.replace('%', '')) || null,
+                                zone: "",  // Empty string as per requirements
+                                time_stamp: entry.timestamp ?
+                                    // Fix date format and extract date part
+                                    entry.timestamp.slice(0, 10) : "",
+                                trials: entry.trial,
+                                type: 2
+                            }));
+
+                            // console.log(parsedExhalation);
+                            sensorDetailServices.createSensorDetail(parsedExhalation);
 
                             // Reset buffer and receiving state
                             currentBuffer = ``;
@@ -156,7 +223,6 @@ export default function BluetoothComponent() {
 
                 setBatteryData("");
                 setInhalationData("");
-                setExhalationData("");
 
                 setDevice(null);
             }

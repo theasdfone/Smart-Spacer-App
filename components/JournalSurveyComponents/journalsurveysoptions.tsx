@@ -13,8 +13,8 @@ export default function JournalSurveyOptions({ selectedOption, textOptions }: Pr
             <TouchableOpacity>
                 <View style={style.checkBoxContainer}>
                     <Image
-                        source={require("@/assets/images/journalsurveys/good-bunny.png")}
-                        style={style.bunnyImage}
+                        source={require("@/assets/images/journalsurveys/bunny-good.png")}
+                        style={selectedOption == 1 ? style.bunnyImageSelected : style.bunnyImageNotSelected}
                     />
                     <View style={selectedOption == 1 ? style.optionTextContainer : style.optionTextNotSelectedContainer}>
                         <Text style={selectedOption == 1 ? style.optionText : style.optionTextNotSelected}>{textOptions.good}</Text>
@@ -24,8 +24,8 @@ export default function JournalSurveyOptions({ selectedOption, textOptions }: Pr
             <TouchableOpacity>
                 <View style={style.checkBoxContainer}>
                     <Image
-                        source={require("@/assets/images/journalsurveys/neutral-bunny.png")}
-                        style={style.bunnyImage}
+                        source={require("@/assets/images/journalsurveys/bunny-neutral.png")}
+                        style={selectedOption == 2 ? style.bunnyImageSelected : style.bunnyImageNotSelected}
                     />
                     <View style={selectedOption == 2 ? style.optionTextContainer : style.optionTextNotSelectedContainer}>
                         <Text style={selectedOption == 2 ? style.optionText : style.optionTextNotSelected}>{textOptions.neutral}</Text>
@@ -35,8 +35,8 @@ export default function JournalSurveyOptions({ selectedOption, textOptions }: Pr
             <TouchableOpacity>
                 <View style={style.checkBoxContainer}>
                     <Image
-                        source={require("@/assets/images/journalsurveys/bad-bunny.png")}
-                        style={style.bunnyImage}
+                        source={require("@/assets/images/journalsurveys/bunny-unwell.png")}
+                        style={selectedOption == 3 ? style.bunnyImageSelected : style.bunnyImageNotSelected}
                     />
                     <View style={selectedOption == 3 ? style.optionTextContainer : style.optionTextNotSelectedContainer}>
                         <Text style={selectedOption == 3 ? style.optionText : style.optionTextNotSelected}>{textOptions.bad}</Text>
@@ -46,8 +46,8 @@ export default function JournalSurveyOptions({ selectedOption, textOptions }: Pr
             <TouchableOpacity>
                 <View style={style.checkBoxContainer}>
                     <Image
-                        source={require("@/assets/images/journalsurveys/horrible-bunny.png")}
-                        style={style.bunnyImage}
+                        source={require("@/assets/images/journalsurveys/bunny-sad.png")}
+                        style={selectedOption == 4 ? style.bunnyImageSelected : style.bunnyImageNotSelected}
                     />
                     <View style={selectedOption == 4 ? style.optionTextContainer : style.optionTextNotSelectedContainer}>
                         <Text style={selectedOption == 4 ? style.optionText : style.optionTextNotSelected}>{textOptions.horrible}</Text>
@@ -63,7 +63,7 @@ const style = StyleSheet.create({
     main: {
         marginTop: 10
     },
-    
+
     checkBoxContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -106,10 +106,20 @@ const style = StyleSheet.create({
         color: "#A7A1A1"
     },
 
-    bunnyImage: {
+    bunnyImageSelected: {
         width: 40,
         height: 40,
-        marginTop: 10
+        marginTop: 10,
+        borderRadius: 50,
+        backgroundColor: "white"
+    },
+
+    bunnyImageNotSelected: {
+        width: 40,
+        height: 40,
+        marginTop: 10,
+        borderRadius: 50,
+        backgroundColor: "#EEEEEE"
     },
 
 });
