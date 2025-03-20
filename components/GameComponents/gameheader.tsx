@@ -19,7 +19,7 @@ export default function GameHeader({ modalVisible, setModalVisible }: Props) {
             setModalVisible(!modalVisible);
           }}
         >
-          <GameScreen 
+          <GameScreen
             setGameModalVisible={setModalVisible}
           />
         </Modal>

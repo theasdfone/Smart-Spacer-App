@@ -3,13 +3,13 @@ import { fetchData } from "./util/api"
 
 import * as SecureStore from 'expo-secure-store';
 
-const token = SecureStore.getItem("secure_token");
+const token = SecureStore.getItemAsync("secure_token");
 
 export const spacerServices = {
     async getSpacers() {
         const result = await fetchData('spacer', {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -17,7 +17,7 @@ export const spacerServices = {
     async getSpacersByChildId(child_id: String) {
         const result = await fetchData(`spacer/${child_id}`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -25,7 +25,7 @@ export const spacerServices = {
     async getSpacerMedicationByChildId(child_id: String) {
         const result = await fetchData(`spacer/medication/${child_id}`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -38,7 +38,7 @@ export const spacerServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
@@ -49,14 +49,14 @@ export const spacerServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
     async deleteSpacer(id: number) {
         const result = await fetchData(`spacer/${id}`, {
             method: 'DELETE',
-        }, token);
+        }, await token);
         return result;
     }
 }

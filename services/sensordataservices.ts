@@ -4,21 +4,22 @@ import { fetchData } from "./util/api"
 import * as SecureStore from 'expo-secure-store';
 import { SensorDetail } from "@/components/models/sensordetail";
 
-const token = SecureStore.getItem("secure_token");
+const token = SecureStore.getItemAsync("secure_token");
 
 export const sensorDetailServices = {
-    async getSensorDetailByDate(child_id: string, start: string, end: string) {
-        const result = await fetchData(`sensor_details/${child_id}?start=${start}&end=${end}`, {
+    async getSensorDetailByDate(spacer_id: number, start: string, end: string, type: number) {
+        console.log(token)
+        const result = await fetchData(`sensor_details/${spacer_id}?start=${start}&end=${end}&type=${type}`, {
             method: 'GET',
-        }, token);
-        console.log(result);
+        }, await token);
+
         return result;
     },
 
-    async getSensorDetailByChildId(child_id: string) {
-        const result = await fetchData(`sensor_details/${child_id}`, {
+    async getSensorDetailByChildId(spacer_id: number) {
+        const result = await fetchData(`sensor_details/${spacer_id}`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -31,7 +32,7 @@ export const sensorDetailServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entrys),
-        }, token);
+        }, await token);
         return result;
     },
 
@@ -42,14 +43,14 @@ export const sensorDetailServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
     async deleteSensorDetail(id: number) {
         const result = await fetchData(`sensor_details/${id}`, {
             method: 'DELETE',
-        }, token);
+        }, await token);
         return result;
     }
 }

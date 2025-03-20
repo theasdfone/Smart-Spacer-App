@@ -3,21 +3,20 @@ import { fetchData } from "./util/api"
 
 import * as SecureStore from 'expo-secure-store';
 
-const token = SecureStore.getItem("secure_token");
+const token = SecureStore.getItemAsync("secure_token");
 
 export const spacerUseInfoServices = {
     async getSpacerUseInfoByDate(child_id: string, start: string, end: string) {
         const result = await fetchData(`spacer_use_info/${child_id}?start=${start}&end=${end}`, {
             method: 'GET',
-        }, token);
-        console.log(result);
+        }, await token);
         return result;
     },
 
     async getSpacerUseInfoByChildId(child_id: string) {
         const result = await fetchData(`spacer_use_info/${child_id}`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -29,7 +28,7 @@ export const spacerUseInfoServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
@@ -40,14 +39,14 @@ export const spacerUseInfoServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
     async deleteSpacerUseInfo(id: number) {
         const result = await fetchData(`spacer_use_info/${id}`, {
             method: 'DELETE',
-        }, token);
+        }, await token);
         return result;
     }
 }

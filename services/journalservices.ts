@@ -3,13 +3,13 @@ import { fetchData } from "./util/api"
 
 import * as SecureStore from 'expo-secure-store';
 
-const token = SecureStore.getItem("secure_token");
+const token = SecureStore.getItemAsync("secure_token");
 
 export const journalServices = {
     async getJournals() {
         const result = await fetchData('journal', {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -17,7 +17,7 @@ export const journalServices = {
     async getJournalsByChildId(childId: string) {
         const result = await fetchData(`journal/${childId}`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -25,7 +25,7 @@ export const journalServices = {
     async getJournalsByChildIdAndDate(childId: string, selectedDate: string) {
         const result = await fetchData(`journal/${childId}?date=${selectedDate}`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -37,7 +37,7 @@ export const journalServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
@@ -48,14 +48,14 @@ export const journalServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
     async deleteJournal(id: number) {
         const result = await fetchData(`journal/${id}`, {
             method: 'DELETE',
-        }, token);
+        }, await token);
         return result;
     }
 }

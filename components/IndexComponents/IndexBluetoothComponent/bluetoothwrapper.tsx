@@ -25,7 +25,7 @@ export default function BluetoothWrapper({ charge, serialNumber, status }: Props
 
   return (
     <View style={style.main}>
-      <View style={style.spacerMain}>
+      <View>
         <View style={style.titleContainer}>
           <Text style={style.title}>{child?.name}'s Spacer</Text>
           {/* Is this the serial number for the inhaler or the spacer? */}
@@ -73,12 +73,9 @@ const style = StyleSheet.create({
     flexDirection: "row",
     paddingTop: 10,
     paddingBottom: 20,
-    borderRadius: 10
-  },
-
-  spacerMain: {
-    paddingLeft: 20,
-    paddingRight: 100
+    borderRadius: 10,
+    paddingHorizontal: "5%",
+    alignItems: "center",
   },
 
   titleContainer: {
@@ -107,9 +104,9 @@ const style = StyleSheet.create({
   },
 
   spacerImage: {
-    flex: 1,
-    width: null,
-    height: null,
-    resizeMode: "contain"
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+    aspectRatio: 1,
   }
 });

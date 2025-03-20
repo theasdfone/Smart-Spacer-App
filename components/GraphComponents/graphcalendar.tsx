@@ -68,7 +68,7 @@ export default function GraphCalendar({spacerUse, setSpacerUse}: Props) {
             <CalendarStrip
                 style={{
                     height: 75,
-                    width: 400,
+                    maxWidth: "100%",
                     paddingLeft: 15
                 }}
                 calendarHeaderStyle={{ fontSize: 24 }}
@@ -187,14 +187,17 @@ const style = StyleSheet.create({
     },
 
     iconsLabels: {
-        height: 20,
         width: 20,
-        marginRight: 5
+        height: 20,
+        aspectRatio: 1.5,
+        resizeMode: "contain",
     },
 
     icons: {
         height: 25,
         width: 25,
+        aspectRatio: 0.75,
+        resizeMode: "contain",
         marginRight: 5
     },
 
@@ -213,7 +216,7 @@ const style = StyleSheet.create({
         flexDirection: "row",
         borderTopWidth: 1,
         borderLeftWidth: 1,
-        gap: 19,
+        gap: "8%",
         width: "85%",
         height: 140
     },
@@ -237,12 +240,13 @@ const style = StyleSheet.create({
 
     descriptionsContainer: {
         flexDirection: "row",
-        marginLeft: 50,
         marginTop: 30,
-        gap: 20
+        gap: "20%",
+        marginLeft: "10%"
     },
 
     descriptionRow: {
+        width: 100,
         gap: 15
-    }
+    },
 });
