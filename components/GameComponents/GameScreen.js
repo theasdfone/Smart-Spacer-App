@@ -80,16 +80,18 @@ const GameScreen = () => {
   const [bkgImageSize, setBkgImageSize] = useState({ width: 0, height: 0 });
 
   const redPictures = [
-    require("./carousel/image1.png"), // Replace with your image paths
-    require("./carousel/image2.png"),
-    require("./carousel/image3.png"),
-    null,
+    require("./assets/FoodBowl.png"),
+    require("./carousel/food/burger_bowl.png"), // Replace with your image paths
+    require("./carousel/food/icecream_bowl.png"),
+    require("./carousel/food/oj_bowl.png"),
+    require("./carousel/food/sushi_bowl.png"),
   ];
 
   const greenPictures = [
-    require("./carousel/image1.png"), // Replace with your image paths
-    require("./carousel/image2.png"),
-    require("./carousel/image3.png"),
+    require("./bunny/neutral.png"),
+    require("./carousel/clothes/Glasses.png"), // Replace with your image paths
+    require("./carousel/clothes/Hat.png"),
+    require("./carousel/clothes/Shirt.png"),
   ];
 
   const buttonImages = [

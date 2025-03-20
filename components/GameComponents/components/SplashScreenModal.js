@@ -25,7 +25,7 @@ const SplashScreenModal = ({ visible, onClose }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Image
-            source={require("../carousel/image2.png")} // replace with my hidden image
+            source={require("../bunny/happy.png")} // replace with my hidden image
             style={styles.image}
             resizeMode="contain"
           />
