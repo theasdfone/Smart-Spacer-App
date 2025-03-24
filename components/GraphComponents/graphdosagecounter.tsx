@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
 import ProgressCircle from 'react-native-progress/Circle';
 import { SpacerMedication } from "../models/spacermedications";
 import { spacerServices } from "@/services/spacerservices";
@@ -26,6 +26,8 @@ export default function GraphDosageCounter() {
         }
     }, []);
 
+    let screenWidth = Dimensions.get("window").width;
+
     return (
         <View>
             <View style={style.container}>
@@ -42,7 +44,7 @@ export default function GraphDosageCounter() {
                                 <ProgressCircle
                                     progress={spacerMedication.doses_left / 100}
                                     color={"#2B1700"}
-                                    size={150}
+                                    size={screenWidth/3}
                                     thickness={12}
                                     unfilledColor={"#979797"}
                                     strokeCap={"round"}
@@ -50,8 +52,8 @@ export default function GraphDosageCounter() {
                                 <View style={style.moveContainerInsideCircle}>
                                     <View style={style.doseTextContainer}>
                                         <Text style={style.doseHeader}>{spacerMedication.commercial_name}</Text>
-                                        <Text>~{spacerMedication.doses_left} Puffs</Text>
-                                        <Text>Left</Text>
+                                        <Text style={style.puff}>~{spacerMedication.doses_left} Puffs</Text>
+                                        <Text style={style.puff}>Left</Text>
                                     </View>
                                 </View>
                             </View>
@@ -151,7 +153,12 @@ const style = StyleSheet.create({
     },
 
     doseHeader: {
-        fontSize: 16,
-        fontWeight: "bold"
+        fontSize: Dimensions.get("window").width/35,
+        fontWeight: "bold",
+        width: Dimensions.get("window").width/5
     },
+
+    puff: {
+        fontSize: Dimensions.get("window").width/50
+    }
 });

@@ -3,13 +3,13 @@ import { fetchData } from "./util/api"
 
 import * as SecureStore from 'expo-secure-store';
 
-const token = SecureStore.getItem("secure_token");
+const token = SecureStore.getItemAsync("secure_token");
 
 export const childServices = {
     async getChilds() {
         const result = await fetchData('child', {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -17,7 +17,7 @@ export const childServices = {
     async getChildsByUserId(parentId: String) {
         const result = await fetchData(`child/${parentId}`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -25,7 +25,7 @@ export const childServices = {
     async getChildById(childId: String) {
         const result = await fetchData(`child/${childId}/specific`, {
             method: 'GET',
-        }, token);
+        }, await token);
 
         return result;
     },
@@ -37,7 +37,7 @@ export const childServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
@@ -48,14 +48,14 @@ export const childServices = {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(entry),
-        }, token);
+        }, await token);
         return result;
     },
 
     async deleteChild(id: number) {
         const result = await fetchData(`child/${id}`, {
             method: 'DELETE',
-        }, token);
+        }, await token);
         return result;
     }
 }
