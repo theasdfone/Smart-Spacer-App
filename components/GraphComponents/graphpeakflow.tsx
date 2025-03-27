@@ -16,9 +16,8 @@ export default function GraphPeakFlow() {
     const fetchSensorInfoData = async (spacer_id: number) => {
         try {
             await sensorDetailServices.getSensorDetailByDate(spacer_id, moment(start).format("YYYY-MM-DD"), moment(end).format("YYYY-MM-DD"), 2).then((data) => {
-                console.log(data);
-                // let parsedData = data.map()
-                // setData(parsedData);
+                const parsedData = data.map((item:any) => ({ value: item.flow_rate }));
+                setData(parsedData);
             });
         } catch (err) {
             console.log(err)
