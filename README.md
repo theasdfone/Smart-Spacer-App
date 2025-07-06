@@ -26,6 +26,7 @@ Peak expiratory flow rate (PEFR) data for lung function testing
 The choices of these metrics were influenced by interviews with respiratory clinicians and research into literature regarding what types of data clinicians often use for condition evaluation. These metrics were intentionally selected due to the limitations of existing data collection methods, which are often unreliable—such as relying on patient self-reports or prescription refill frequencies to track medication usage. Additionally, certain data points, like spacer effectiveness or PEFR measurements, are difficult to obtain using conventional approaches.
 
 The team chose to measure the effectiveness of medication usage by measuring how quickly patients inhale their medication. This decision was influenced by a paper covering the ideal flow rates a patient must meet to maximize the deposition of medication in the lungs [11]. To measure this and PEFR, the team looked into methods of measuring flow rate and settled on a differential pressure sensor for its simplicity and minimal impact on regular flow through the spacer. From this and calculations relating to expected flow rates through the spacer, the main technical engineering specifications for the flow sensor were developed as shown below:
+
 Table 2. Subset of technical engineering specifications for the sensor
 ![image](https://github.com/user-attachments/assets/767fe7bf-d6ca-4616-9e99-2534b1f86866)
 
@@ -138,15 +139,19 @@ Our appreciation extends to our community and cohort members for their camarader
 
 
 
-APPENDIX
-Appendix A: Design for the electronic components in the two main modes of usage
+# APPENDIX
+
+## Appendix A: Design for the electronic components in the two main modes of usage
 ![image](https://github.com/user-attachments/assets/c3762d08-4df9-47f7-a73c-4c91facb8e87)
+
 Figure A.1: a) Medication mode, b) PEFR Mode
 
-Appendix B: Linear of regression of sensor data with R2
+## Appendix B: Linear of regression of sensor data with R2
 ![image](https://github.com/user-attachments/assets/51dc593d-0f1f-4a50-8789-57752c4b6530)
+
 Figure B.1: Data collected by a spirometer against data collected by the team's sensor
 
 ![image](https://github.com/user-attachments/assets/fb714153-4754-434f-986f-ff8e0965465b)
+
 Figure B.2: Residuals plot for the linear regression and data points at the low range of 0-1 litres per second (0 - 60 L/min)
 
